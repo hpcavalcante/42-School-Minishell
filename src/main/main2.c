@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/20 13:42:33 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:23:44 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	parse(char *str)
 
 void	init_shell()
 {	
+	clear();
 	signal(SIGINT, prompt);
 	while (1)
 	{
@@ -50,11 +51,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	if (argc != 1)
 	{
-		printf("Tá malucão?\n");
+		signal(SIGILL, perror("Tá malucão?\n"));
 		exit(1);
 	}
 	g_data = malloc(sizeof(t_data));
 	g_data->buffer = NULL;
-	clear();
 	init_shell();
 }
