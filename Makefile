@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/10/19 15:54:19 by gissao-m         ###   ########.fr        #
+#    Updated: 2022/10/20 11:27:45 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,10 @@ clean:
 fclean: clean
 	$(RM) $(NAME) 
 	make fclean -C ./libft
+
+install: 
+	@echo "Installing dependencies"
+	@sudo apt-get install libreadline-dev
 
 re: fclean all
 
