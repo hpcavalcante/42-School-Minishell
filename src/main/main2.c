@@ -6,22 +6,18 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/20 12:54:15 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:42:33 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
+#include "../../include/minishell.h"
 
-#define clear() printf("\033[H\033[J")
+t_data *g_data;
 
 void	prompt(int signal)
 {
 	(void) signal;
+	printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
@@ -31,32 +27,34 @@ void	parse(char *str)
 {
 	if (strcmp(str, "exit") == 0)	
 	{	
-		
+		free(g_data->buffer);
 		exit(0);
 	}
 }
 
-void	init_shell(char *str)
-{
-	char	*buffer;
-	
+void	init_shell()
+{	
 	signal(SIGINT, prompt);
 	while (1)
 	{
-		buffer = readline("\e[1;34mminishell: \e[0m");
-		if (strlen(buffer) != 0)
+		g_data->buffer = readline("\e[1;32mminishell: \e[0m");
+		if (strlen(g_data->buffer) != 0)
 		{
-			add_history(buffer);
-			strcpy(str, buffer);
-			parse(str);
+			add_history(g_data->buffer);
+			parse(g_data->buffer);
 		}
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	input[1000];
-
+	if (argc != 1)
+	{
+		printf("Tá malucão?\n");
+		exit(1);
+	}
+	g_data = malloc(sizeof(t_data));
+	g_data->buffer = NULL;
 	clear();
-	init_shell(input);
+	init_shell();
 }

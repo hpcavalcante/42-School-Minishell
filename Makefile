@@ -6,7 +6,7 @@
 #    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/10/20 11:27:45 by hepiment         ###   ########.fr        #
+#    Updated: 2022/10/20 13:30:39 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = gcc
 INCLUDE = -I ./include/
-CFLAGS = -Wall -Werror -Wextra -g $(INCLUDE)
+CFLAGS = -g $(INCLUDE)
 CREADLINE = -lreadline
 
 RM = rm -rf
@@ -25,14 +25,14 @@ PATH_LIBFT = $(PATH_INCLUDE)libft/
 PATH_MAIN = $(PATH_SRC)main/
 PATH_OBJS = ./objs/
 
-SRC =	$(PATH_MAIN)main.c\
+SRC =	$(PATH_MAIN)main2.c\
 
 OBJS = $(patsubst $(PATH_SRC)%.c, $(PATH_OBJS)%.o, $(SRC))
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS)  $(OBJS) -o $(NAME) -L ./libft -lft
+	$(CC) $(CFLAGS)  $(OBJS) -o $(NAME) -L ./libft -lft $(CREADLINE)
 
 $(PATH_OBJS)%.o: $(PATH_SRC)%.c
 	@mkdir -p $(PATH_OBJS)

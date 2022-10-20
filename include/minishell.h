@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/20 12:55:45 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:32:27 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,10 @@
 
 # define clear() printf("\033[H\033[J")
 
+typedef struct s_data
+{
+	char *buffer;
+} t_data;
+
+extern t_data *g_data;
 #endif
