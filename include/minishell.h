@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/21 15:24:13 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:31:30 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,23 @@ typedef struct s_data
 {
 	int		exitcode;
 	int		pid;
+	int		save_stdin;
+	int		save_stdout;
 	char	**cmd;
 	char	*path;
 	char 	**envp;
-	char 	*buffer;
-	
+	char 	*buffer;	
 } t_data;
+
+char	*get_path(char **path_env);
+char	**find_env(char **path_env);
+int		count_find(char *str_cmd);
+char	**matrix_cmd(char *cmd);
+char	**get_cmd(char *cmd);
+void	parse();
+void	command();
+void	kill_loop(int signal);
+void	exit_code(int signal);
 
 extern t_data *g_data;
 #endif
