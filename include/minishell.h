@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/24 17:31:30 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/10/26 13:04:40 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,25 @@
 
 # define clear() printf("\033[H\033[J")
 
+typedef struct s_link
+{
+	int				pipe_fd[2];
+	char			**cmd;
+	char			*path;
+	struct s_link	*next;
+}	t_link;
+
 typedef struct s_data
 {
 	int		exitcode;
 	int		pid;
 	int		save_stdin;
 	int		save_stdout;
-	char	**cmd;
-	char	*path;
 	char 	**envp;
-	char 	*buffer;	
+	char 	*buffer;
+	t_link	*list;
 } t_data;
+
 
 char	*get_path(char **path_env);
 char	**find_env(char **path_env);
@@ -46,6 +54,7 @@ void	parse();
 void	command();
 void	kill_loop(int signal);
 void	exit_code(int signal);
+void	tokenizer();
 
 extern t_data *g_data;
 #endif

@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/25 17:41:58 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/10/26 13:08:34 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	command()
 		g_data->exitcode = 1;
 		exit(g_data->exitcode);
 	}
-	execve(g_data->path, g_data->cmd, g_data->envp);
+	execve(g_data->list->path, g_data->list->cmd, g_data->envp);
 }
 
 void	init_shell()
@@ -70,7 +70,7 @@ void	init_shell()
 }
 
 int	main(int argc, char **argv, char **envp)
-{
+{ 
 	if (argc != 1)
 	{
 		printf("Invalid argument\n");
@@ -81,5 +81,10 @@ int	main(int argc, char **argv, char **envp)
 	g_data->envp = envp;
 	g_data->save_stdin = STDIN_FILENO;
 	g_data->save_stdout = STDOUT_FILENO;
+	t_link *list;
+	list = (t_link *)malloc(sizeof (t_link));
+	g_data->list = list;
+	list->cmd == NULL;
+	list->path == NULL;
 	init_shell();
 }

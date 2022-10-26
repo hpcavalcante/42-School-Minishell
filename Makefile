@@ -6,7 +6,7 @@
 #    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/10/24 17:09:47 by hepiment         ###   ########.fr        #
+#    Updated: 2022/10/26 12:26:32 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ PATH_OBJS = ./objs/
 SRC =	$(PATH_MAIN)main2.c\
 		$(PATH_SRC)parse.c\
 		$(PATH_SRC)parse_utils.c\
+		$(PATH_SRC)tokenizer.c\
 
 OBJS = $(patsubst $(PATH_SRC)%.c, $(PATH_OBJS)%.o, $(SRC))
 
