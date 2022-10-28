@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/26 13:11:17 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:35:19 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 char	**find_env(char **path_env)
 {
@@ -26,7 +26,7 @@ char	**find_env(char **path_env)
 	return (matrix);
 }
 
-char	*get_path(char **path_env)
+char	*get_path(t_link *link, char **path_env)
 {
 	int		count;
 	char	*path;
@@ -38,7 +38,7 @@ char	*get_path(char **path_env)
 	while (matrix[count] != 0)
 	{
 		temp = ft_strjoin(matrix[count], "/");
-		path = ft_strjoin(temp, g_data->list->cmd[0]);
+		path = ft_strjoin(temp, link->cmd[0]);
 		free (temp);
 		if (access(path, F_OK | X_OK) == 0)
 		{

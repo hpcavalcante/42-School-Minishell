@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/26 13:04:40 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:33:38 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 #include "../libft/libft.h"
 
 # define clear() printf("\033[H\033[J")
+# define STDERR 2
 
 typedef struct s_link
 {
-	int				pipe_fd[2];
 	char			**cmd;
 	char			*path;
 	struct s_link	*next;
@@ -37,24 +37,29 @@ typedef struct s_data
 {
 	int		exitcode;
 	int		pid;
+	int		error;
 	int		save_stdin;
 	int		save_stdout;
 	char 	**envp;
 	char 	*buffer;
-	t_link	*list;
+	t_link	*link;
 } t_data;
 
 
-char	*get_path(char **path_env);
+char	*get_path(t_link *link, char **path_env);
 char	**find_env(char **path_env);
 int		count_find(char *str_cmd);
 char	**matrix_cmd(char *cmd);
 char	**get_cmd(char *cmd);
+void	process(t_link *link);
 void	parse();
 void	command();
 void	kill_loop(int signal);
 void	exit_code(int signal);
 void	tokenizer();
+void	linked_list(t_link *link, t_link *new);
+void	init_linked_list(t_link *new);
+char	*char_join(char *str1, char c);
 
 extern t_data *g_data;
 #endif

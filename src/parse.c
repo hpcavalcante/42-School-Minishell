@@ -3,64 +3,116 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/26 13:11:57 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:04:11 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-void	parse()
+void	process(t_link *link)
 {
 	g_data->pid = fork();
-	signal(SIGQUIT, SIG_IGN);
+	
+	// close(g_data->fd_pipe[0]);
+	// dup2(g_data->fd_pipe, );
 	if (g_data->pid == 0)
 	{
-		tokenizer();
-		g_data->list->cmd = get_cmd(g_data->buffer);
-		g_data->list->path = get_path(g_data->envp);
+		g_data->link->path = get_path(link, g_data->envp);
 		command();
 	}
 	waitpid(g_data->pid, NULL, 0);
 	command();
 }
 
-void	child_process(char **argv, char **env, t_link *link)
+void	parse_loop(char **checked_line)
 {
-	char	*temp;
-	int		i;
-
-	dup2(link->fd[1], STDOUT_FILENO);
-	dup2(link->infile, STDIN_FILENO);
-	close(link->fd[0]);
-	link->cmd = matrix_block_cmd(argv[2]);
-	link->path = find_the_path(link, env);
+	int	i;
+	
 	i = 0;
-	while (link->cmd[i])
+	while (g_data->buffer[i] != '\0')
 	{
-		temp = ft_strtrim(link->cmd[i], "\'");
-		free (link->cmd[i]);
-		link->cmd[i] = ft_strdup(temp);
-		free (temp);
-		i++;
+		while (g_data->buffer[i] == ' ' && *checked_line == NULL)
+			i++;
+		// if (g_data->buffer[i] == '&' || g_data->buffer[i] == ';' || g_data->buffer[i] == '\\'\
+		// ||g_data->buffer[i] == '(' || g_data->buffer[i] == ')' || g_data->buffer[i] == '*')
+		// 	syntax_error(g_data->link->cmd + i);
+		// if (g_data->buffer[i] == '|')
+		// 	i += pipe_split(); 
+		if (g_data->buffer[i] != '\0')
+			*checked_line = char_join(*checked_line, g_data->buffer[i++]);
 	}
-	execve_error(data, env);
 }
 
-void	parent_process(t_data *data, int pid, t_link *link)
+void	parse(t_link *link)
 {
-	int	wstatus;
-	int	status_code;
+	char	*checked_line;
+	t_link	*new;
 
-	close(link->pipe_fd[0]);
-	close(link->pipe_fd[1]);
-	waitpid(pid, NULL, 0);
-	if (WIFEXITED(wstatus))
+	new = (t_link *) malloc (sizeof(t_link));
+	init_linked_list(new);
+	checked_line = NULL;
+	parse_loop(&checked_line);
+	process(link);
+	if (checked_line != NULL)
+		new->cmd = get_cmd(checked_line);
+	free (checked_line);
+	linked_list(link, new);
+	if (link->cmd == NULL)
+		g_data->error = 1;
+}
+
+void	linked_list(t_link *link, t_link *new)
+{
+	if (link->cmd == NULL)
 	{
-		status_code = WEXITSTATUS(wstatus);
-		free(data);
-		exit (status_code);
+		link->cmd = new->cmd;
+		link->next = new->next;
+		link->path = new->path;
+		link->next = NULL;
+		free (new);
 	}
+	else
+	{
+		while (link->next != NULL)
+			link = link->next;
+		link->next = new;
+	}
+}
+
+void	init_linked_list(t_link *new)
+{
+	new->cmd = NULL;
+	new->next = NULL;
+	new->path = NULL;
+}
+
+char	*char_join(char *str1, char c)
+{
+	int		i;
+	char	*str2;
+
+	i = -1;
+	if (c == '\0')
+		return (str1);
+	if (str1 == NULL)
+	{
+		str2 = malloc (2 * sizeof(char));
+		str2[0] = c;
+		str2[1] = '\0';
+	}
+	else
+	{
+		str2 = malloc ((ft_strlen(str1) + 2) * sizeof(char));
+		if (str2 == NULL)
+			return (NULL);
+		while (str1[++i] != '\0')
+			str2[i] = str1[i];
+		str2[i++] = c;
+		str2[i] = '\0';
+	}
+	free (str1);
+	return (str2);
 }
