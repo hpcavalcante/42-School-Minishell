@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/28 13:33:38 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/07 19:30:01 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_link
 {
 	char			**cmd;
 	char			*path;
+	int				pipe_fd[2];
 	struct s_link	*next;
 }	t_link;
 

@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/28 14:25:08 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:07:05 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,10 @@ void	command()
 		g_data->exitcode = 1;
 		exit(g_data->exitcode);
 	}
-	if (g_data->link->cmd == NULL)
-		printf("DEURUIM\n");
-	else
-		for (int i = 0; g_data->link->cmd[i]; i++)
-			printf("CMD: %s\n", g_data->link->cmd[i]);
+	close(g_data->link->pipe_fd[0]);
+	if (g_data->link->next != NULL)
+		dup2(g_data->link->pipe_fd[1], 1);
+	close(g_data->link->pipe_fd[1]);
 	execve(g_data->link->path, g_data->link->cmd, g_data->envp);
 }
 
@@ -61,20 +60,33 @@ void	init_shell()
 	signal(SIGINT, kill_loop);
 	while (1)
 	{
+		g_data->error = 0;
+		g_data->buffer = NULL;
+		g_data->link = NULL;
 		signal(SIGQUIT, SIG_IGN);
 		g_data->buffer = readline("\e[1;32m[minishell]: \e[0m");
-		if (g_data->buffer)
+		if (g_data->buffer != NULL)
 		{
 			add_history(g_data->buffer);
+			t_link *link;
+			link = (t_link *)malloc(sizeof (t_link));
+			link->next = NULL;
+			g_data->link = link;
 			parse(g_data->link);
-			process(g_data->link);
-			g_data->link = g_data->link->next;
+			while (g_data->link != NULL)
+			{
+				process(g_data->link);
+				g_data->link = g_data->link->next;	
+			}
 		}
-		else if (g_data->buffer == NULL)
+		else		
 		{	
-			write(1, "exit\n", 6);
+			write(1, "exitA\n", 6);
 			exit (0);
 		}
+		dup2(g_data->save_stdin, 0);
+		dup2(g_data->save_stdout, 1);
+		free(g_data->buffer);
 		// while (g_data->link != NULL)
 		// {
 		// 	if (g_data->link->cmd != NULL)
@@ -97,10 +109,11 @@ int	main(int argc, char **argv, char **envp)
 	g_data = malloc(sizeof(t_data));
 	g_data->buffer = NULL;
 	g_data->envp = envp;
-	g_data->save_stdin = STDIN_FILENO;
-	g_data->save_stdout = STDOUT_FILENO;
+	g_data->save_stdin = dup(0);
+	g_data->save_stdout = dup(1);
 	t_link *link;
 	link = (t_link *)malloc(sizeof (t_link));
+	link->next = NULL;
 	g_data->link = link;
 	link->cmd == NULL;
 	link->path == NULL;

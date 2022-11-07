@@ -6,32 +6,56 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/10/28 14:04:11 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/07 19:47:09 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+void	parent_command(t_link *list)
+{
+	int	status;
+
+	close(list->pipe_fd[1]);
+	if (list->next != NULL)
+	{
+		dup2(list->pipe_fd[0], 0);
+		waitpid(g_data->pid, &status, 0);
+		g_data->exitcode = WEXITSTATUS(status);
+	}
+	else
+	{
+		waitpid(g_data->pid, &status, 0);
+		g_data->exitcode = WEXITSTATUS(status);
+	}
+	close (list->pipe_fd[0]);
+}
 
 void	process(t_link *link)
 {
-	g_data->pid = fork();
 	
 	// close(g_data->fd_pipe[0]);
 	// dup2(g_data->fd_pipe, );
+	if (pipe(link->pipe_fd) == -1)
+		exit (-1);
+	g_data->pid = fork();
 	if (g_data->pid == 0)
 	{
 		g_data->link->path = get_path(link, g_data->envp);
 		command();
 	}
-	waitpid(g_data->pid, NULL, 0);
-	command();
+	parent_command(link);
 }
 
 void	parse_loop(char **checked_line)
 {
 	int	i;
-	
+	t_link	*temp;
+	t_link	*new;
+
+	new = (t_link *) malloc (sizeof(t_link));
+	init_linked_list(new);
 	i = 0;
+	temp = g_data->link;
 	while (g_data->buffer[i] != '\0')
 	{
 		while (g_data->buffer[i] == ' ' && *checked_line == NULL)
@@ -39,11 +63,32 @@ void	parse_loop(char **checked_line)
 		// if (g_data->buffer[i] == '&' || g_data->buffer[i] == ';' || g_data->buffer[i] == '\\'\
 		// ||g_data->buffer[i] == '(' || g_data->buffer[i] == ')' || g_data->buffer[i] == '*')
 		// 	syntax_error(g_data->link->cmd + i);
-		// if (g_data->buffer[i] == '|')
-		// 	i += pipe_split(); 
-		if (g_data->buffer[i] != '\0')
+		if (g_data->buffer[i] == '|')
+		{
+			while (temp->next != NULL)
+				temp = temp->next;
+			new->cmd = ft_split(*checked_line, ' ');
+			linked_list(temp, new);
+			new = (t_link *) malloc (sizeof(t_link));
+			init_linked_list(new);
+			*checked_line = NULL;
+			i++;
+		}
+		
+		else if (g_data->buffer[i] != '\0')
 			*checked_line = char_join(*checked_line, g_data->buffer[i++]);
 	}
+		if (*checked_line != NULL)
+		{
+			while (temp->next != NULL)
+				temp = temp->next;
+			new->cmd = ft_split(*checked_line, ' ');
+			linked_list(temp, new);
+			new = (t_link *) malloc (sizeof(t_link));
+			init_linked_list(new);
+			*checked_line = NULL;
+			temp = g_data->link;
+		}
 }
 
 void	parse(t_link *link)
@@ -55,13 +100,15 @@ void	parse(t_link *link)
 	init_linked_list(new);
 	checked_line = NULL;
 	parse_loop(&checked_line);
-	process(link);
-	if (checked_line != NULL)
-		new->cmd = get_cmd(checked_line);
-	free (checked_line);
-	linked_list(link, new);
-	if (link->cmd == NULL)
-		g_data->error = 1;
+	//printf("%s %s\n%s %s\n%s %s\n", g_data->link->cmd[0], g_data->link->cmd[1], g_data->link->next->cmd[0], g_data->link->next->cmd[1], g_data->link->next->next->cmd[0], g_data->link->next->next->cmd[1]);
+	
+	// process(link);
+	// if (checked_line != NULL)
+	// 	new->cmd = get_cmd(checked_line);
+	// free (checked_line);
+	// linked_list(link, new);
+	// if (link->cmd == NULL)
+	// 	g_data->error = 1;
 }
 
 void	linked_list(t_link *link, t_link *new)
@@ -69,9 +116,10 @@ void	linked_list(t_link *link, t_link *new)
 	if (link->cmd == NULL)
 	{
 		link->cmd = new->cmd;
-		link->next = new->next;
+		// link->next = new->next;
 		link->path = new->path;
 		link->next = NULL;
+		//o ultimo elemnto da lista linkada precisa ser nulo!!
 		free (new);
 	}
 	else
