@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/08 15:42:29 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:51:21 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,30 @@ void	syntax_error()
 	g_data->error = STDOUT;
 }
 
+
+int	handler_quotes(t_link *link, char quotes)
+{
+	int	i;
+
+	i = 1;
+	link->cmd = char_join(link->cmd, g_data->buffer[0]);
+	while (g_data->buffer[i])
+	{
+		if (quotes == '\"' && g_data->buffer[i] == '$' && g_data->buffer[i+ 1] == '?' \
+		||g_data->buffer[i+ 1] >= '0' || g_data->buffer[i+ 1] <= '9')
+		if (g_data->buffer[i])
+			link->cmd = char_join(link->cmd, g_data->buffer[i]);
+			i++;
+		if (g_data->buffer == quotes)
+		{
+			link->cmd = char_join(link->cmd, g_data->buffer[i]);
+			i++;
+			return (i);
+		}
+		
+	}
+}
+
 void	parse_loop(char **checked_line)
 {
 	int	i;
@@ -73,6 +97,9 @@ void	parse_loop(char **checked_line)
 		if (g_data->buffer[i] == '&' || g_data->buffer[i] == ';' || g_data->buffer[i] == '\\'\
 		||g_data->buffer[i] == '(' || g_data->buffer[i] == ')' || g_data->buffer[i] == '*')
 			syntax_error(g_data->buffer + i);
+		if (g_data->buffer[i] == '\'' || g_data->buffer == '\"')
+			handler_quotes();
+			i++;
 		if (g_data->buffer[i] == '|')
 		{
 			while (temp->next != NULL)
