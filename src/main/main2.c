@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/07 20:07:05 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:23:21 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_str_check(const char *s1, const char *s2)
 		return (0);
 }
 
-void	command()
+void	child_process()
 {
 	if (ft_str_check(g_data->buffer, "exit"))
 	{
@@ -81,7 +81,7 @@ void	init_shell()
 		}
 		else		
 		{	
-			write(1, "exitA\n", 6);
+			write(1, "exit\n", 6);
 			exit (0);
 		}
 		dup2(g_data->save_stdin, 0);

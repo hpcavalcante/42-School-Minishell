@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/07 19:30:01 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:04:04 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 # define clear() printf("\033[H\033[J")
 # define STDERR 2
+# define STDOUT 1
+# define SYNTAX_ERROR "syntax error near unexpected token `"
 
 typedef struct s_link
 {
@@ -54,7 +56,7 @@ char	**matrix_cmd(char *cmd);
 char	**get_cmd(char *cmd);
 void	process(t_link *link);
 void	parse();
-void	command();
+void	child_process();
 void	kill_loop(int signal);
 void	exit_code(int signal);
 void	tokenizer();
