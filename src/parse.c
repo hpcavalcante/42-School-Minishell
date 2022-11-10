@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/08 17:51:21 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:30:24 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,67 @@ void	syntax_error()
 }
 
 
-int	handler_quotes(t_link *link, char quotes)
-{
-	int	i;
+// int	handler_quotes(t_link *link, char quotes)
+// {
+// 	int	i;
 
-	i = 1;
-	link->cmd = char_join(link->cmd, g_data->buffer[0]);
-	while (g_data->buffer[i])
-	{
-		if (quotes == '\"' && g_data->buffer[i] == '$' && g_data->buffer[i+ 1] == '?' \
-		||g_data->buffer[i+ 1] >= '0' || g_data->buffer[i+ 1] <= '9')
-		if (g_data->buffer[i])
-			link->cmd = char_join(link->cmd, g_data->buffer[i]);
-			i++;
-		if (g_data->buffer == quotes)
-		{
-			link->cmd = char_join(link->cmd, g_data->buffer[i]);
-			i++;
-			return (i);
-		}
+// 	i = 1;
+// 	link->cmd = char_join(link->cmd, g_data->buffer[0]);
+// 	while (g_data->buffer[i])
+// 	{
+// 		if (quotes == '\"' && g_data->buffer[i] == '$' && g_data->buffer[i+ 1] == '?' \
+// 		||g_data->buffer[i+ 1] >= '0' || g_data->buffer[i+ 1] <= '9')
+// 		if (g_data->buffer[i])
+// 			link->cmd = char_join(link->cmd, g_data->buffer[i]);
+// 			i++;
+// 		if (g_data->buffer == quotes)
+// 		{
+// 			link->cmd = char_join(link->cmd, g_data->buffer[i]);
+// 			i++;
+// 			return (i);
+// 		}
 		
+// 	}
+// }
+
+
+char	*parse_quotes(char **line, char quote)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	while (*line[i] != '\0')
+	{
+		temp = char_join(temp, *line[i]);
+		i++;
+		if (*line[i] == '\'')
+			i++; 
 	}
+	return (temp);
+	write (STDERR, "Error: unclosed quotes\n", 24);
+	g_data->error = 1;
+	g_data->exitcode = 1;
+}
+void	parse_pipe(char **checked_line)
+{
+	t_link	*temp;
+	t_link	*new;
+
+	new = (t_link *) malloc (sizeof(t_link));
+	init_linked_list(new);
+	temp = g_data->link;
+	if (g_data->buffer[0] == '|')
+	{
+		syntax_error();
+		return ;
+	}
+	while (temp->next != NULL)
+		temp = temp->next;
+	new->cmd = ft_split(*checked_line, ' ');
+	linked_list(temp, new);
+	new = (t_link *) malloc (sizeof(t_link));
+	init_linked_list(new);
 }
 
 void	parse_loop(char **checked_line)
@@ -97,23 +137,38 @@ void	parse_loop(char **checked_line)
 		if (g_data->buffer[i] == '&' || g_data->buffer[i] == ';' || g_data->buffer[i] == '\\'\
 		||g_data->buffer[i] == '(' || g_data->buffer[i] == ')' || g_data->buffer[i] == '*')
 			syntax_error(g_data->buffer + i);
-		if (g_data->buffer[i] == '\'' || g_data->buffer == '\"')
-			handler_quotes();
+		if (g_data->buffer[i] == '\'')
+		{
+			*checked_line = parse_quotes(checked_line, '\'');
+			// g_data->buffer = ft_strtrim(g_data->buffer, "\'");
+			// //handler_quotes(temp, '\'');
+			printf("str: %s\n", g_data->buffer);
 			i++;
+		}
 		if (g_data->buffer[i] == '|')
 		{
-			while (temp->next != NULL)
-				temp = temp->next;
-			new->cmd = ft_split(*checked_line, ' ');
-			linked_list(temp, new);
-			new = (t_link *) malloc (sizeof(t_link));
-			init_linked_list(new);
+			parse_pipe(checked_line);
+			// if (g_data->buffer[0] == '|')
+			// {
+			// 	syntax_error(g_data->buffer + i);
+			// 	return ;
+			// }
+			// while (temp->next != NULL)
+			// 	temp = temp->next;
+			// new->cmd = ft_split(*checked_line, ' ');
+			// linked_list(temp, new);
+			// new = (t_link *) malloc (sizeof(t_link));
+			// init_linked_list(new);
 			*checked_line = NULL;
 			i++;
 		}
 		
-		else if (g_data->buffer[i] != '\0')
+		else //if (g_data->buffer[i] != '\0')
+		{
 			*checked_line = char_join(*checked_line, g_data->buffer[i++]);
+		// for (int i = 0; g_data->buffer[i]; i++)
+		// 	printf("buffer %c\n", g_data->buffer[i]);
+		}
 	}
 		if (*checked_line != NULL)
 		{
