@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/10 16:05:15 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/10 19:30:57 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,49 +61,6 @@ void	syntax_error()
 	g_data->error = STDOUT;
 }
 
-
-// int	handler_quotes(t_link *link, char quotes)
-// {
-// 	int	i;
-
-// 	i = 1;
-// 	link->cmd = char_join(link->cmd, g_data->buffer[0]);
-// 	while (g_data->buffer[i])
-// 	{
-// 		if (quotes == '\"' && g_data->buffer[i] == '$' && g_data->buffer[i+ 1] == '?' \
-// 		||g_data->buffer[i+ 1] >= '0' || g_data->buffer[i+ 1] <= '9')
-// 		if (g_data->buffer[i])
-// 			link->cmd = char_join(link->cmd, g_data->buffer[i]);
-// 			i++;
-// 		if (g_data->buffer == quotes)
-// 		{
-// 			link->cmd = char_join(link->cmd, g_data->buffer[i]);
-// 			i++;
-// 			return (i);
-// 		}
-		
-// 	}
-// }
-
-
-char	*parse_quotes(char **line, char quote)
-{
-	int		i;
-	char	*temp;
-
-	i = 0;
-	while (*line[i] != '\0')
-	{
-		temp = char_join(temp, *line[i]);
-		i++;
-		if (*line[i] == '\'')
-			i++; 
-	}
-	return (temp);
-	write (STDERR, "Error: unclosed quotes\n", 24);
-	g_data->error = 1;
-	g_data->exitcode = 1;
-}
 void	parse_pipe(char **checked_line)
 {
 	t_link	*temp;
@@ -119,10 +76,38 @@ void	parse_pipe(char **checked_line)
 	}
 	while (temp->next != NULL)
 		temp = temp->next;
+	printf("LINE 0: %s\n", *checked_line);
 	new->cmd = ft_split(*checked_line, ' ');
 	linked_list(temp, new);
 	new = (t_link *) malloc (sizeof(t_link));
 	init_linked_list(new);
+}
+
+char	**space_split(char *cmd)
+{
+    char    **matrix;
+    int        x;
+    int        y;
+
+    x = 0;
+    y = 0;
+    matrix = ft_split(cmd, ' ');
+    while (matrix[y] != NULL)
+    {
+        x = 0;
+        while (matrix[y][x] && matrix[y][x] != '\'')
+            x++;
+        if (matrix[y][x] && matrix[y][x + 1])
+            x++;
+        while (matrix[y][x] && matrix[y][x] != '\'')
+        {
+            if (matrix[y][x] == 1)
+                matrix[y][x] = ' ';
+            x++;
+        }
+        y++;
+    }
+    return (matrix);
 }
 
 void	parse_loop(char **checked_line)
@@ -144,44 +129,34 @@ void	parse_loop(char **checked_line)
 			syntax_error(g_data->buffer + i);
 		if (g_data->buffer[i] == '\'')
 		{
-			
+			i++;
+			if (g_data->buffer[i] == ' ' && g_data->buffer[i++])
+				g_data->buffer[i] = 1;
+			printf("str: %s\n", g_data->buffer);
 		}
 		if (g_data->buffer[i] == '|')
 		{
 			parse_pipe(checked_line);
-			// if (g_data->buffer[0] == '|')
-			// {
-			// 	syntax_error(g_data->buffer + i);
-			// 	return ;
-			// }
-			// while (temp->next != NULL)
-			// 	temp = temp->next;
-			// new->cmd = ft_split(*checked_line, ' ');
-			// linked_list(temp, new);
-			// new = (t_link *) malloc (sizeof(t_link));
-			// init_linked_list(new);
 			*checked_line = NULL;
 			i++;
 		}
-		
-		else //if (g_data->buffer[i] != '\0')
-		{
+		else if (g_data->buffer[i] != '\0')
 			*checked_line = char_join(*checked_line, g_data->buffer[i++]);
-		// for (int i = 0; g_data->buffer[i]; i++)
-		// 	printf("buffer %c\n", g_data->buffer[i]);
-		}
 	}
-		if (*checked_line != NULL)
-		{
-			while (temp->next != NULL)
-				temp = temp->next;
-			new->cmd = ft_split(*checked_line, ' ');
-			linked_list(temp, new);
-			new = (t_link *) malloc (sizeof(t_link));
-			init_linked_list(new);
-			*checked_line = NULL;
-			temp = g_data->link;
-		}
+	if (*checked_line != NULL)
+	{
+		printf("LINE 1: %s\n", *checked_line);
+		while (temp->next != NULL)
+			temp = temp->next;
+		new->cmd = space_split(*checked_line);
+		for (int i = 0; new->cmd[i]; i++)
+			printf("out: %s\n", new->cmd[i]);
+		linked_list(temp, new);
+		new = (t_link *) malloc (sizeof(t_link));
+		init_linked_list(new);
+		*checked_line = NULL;
+		temp = g_data->link;
+	}
 }
 
 void	parse(t_link *link)
