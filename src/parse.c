@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/09 15:30:24 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:05:15 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	parent_process(t_link *link)
 {
 	int	wstatus;
 
+	if (ft_str_check(g_data->buffer, "exit"))
+	{
+		g_data->exitcode = 1;
+		exit(g_data->exitcode);
+	}
 	close(link->pipe_fd[1]);
 	if (link->next != NULL)
 	{
@@ -139,11 +144,7 @@ void	parse_loop(char **checked_line)
 			syntax_error(g_data->buffer + i);
 		if (g_data->buffer[i] == '\'')
 		{
-			*checked_line = parse_quotes(checked_line, '\'');
-			// g_data->buffer = ft_strtrim(g_data->buffer, "\'");
-			// //handler_quotes(temp, '\'');
-			printf("str: %s\n", g_data->buffer);
-			i++;
+			
 		}
 		if (g_data->buffer[i] == '|')
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/08 14:04:04 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:04:58 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	tokenizer();
 void	linked_list(t_link *link, t_link *new);
 void	init_linked_list(t_link *new);
 char	*char_join(char *str1, char c);
+int		ft_str_check(const char *s1, const char *s2);
 
 extern t_data *g_data;
 #endif

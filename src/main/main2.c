@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/08 12:23:21 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:05:06 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@ int	ft_str_check(const char *s1, const char *s2)
 
 void	child_process()
 {
-	if (ft_str_check(g_data->buffer, "exit"))
-	{
-		g_data->exitcode = 1;
-		exit(g_data->exitcode);
-	}
 	close(g_data->link->pipe_fd[0]);
 	if (g_data->link->next != NULL)
 		dup2(g_data->link->pipe_fd[1], 1);
