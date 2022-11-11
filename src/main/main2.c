@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/10 16:05:06 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:04:39 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,18 @@ t_data *g_data;
 void	kill_loop(int signal)
 {
 	(void) signal;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (g_data->pid != 0 && g_data->in_exec == 1)
+	{
+		kill(g_data->pid, SIGKILL);
+		write(1, "\n", 1);
+	}
+	if (g_data->in_exec == 0)
+	{
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 	g_data->exitcode = 130;
 	//fazer tratamentos para outros exits
 }
@@ -51,13 +59,13 @@ void	child_process()
 
 void	init_shell()
 {	
-	clear();
 	signal(SIGINT, kill_loop);
 	while (1)
 	{
 		g_data->error = 0;
 		g_data->buffer = NULL;
 		g_data->link = NULL;
+		g_data->in_exec = 0;
 		signal(SIGQUIT, SIG_IGN);
 		g_data->buffer = readline("\e[1;32m[minishell]: \e[0m");
 		if (g_data->buffer != NULL)

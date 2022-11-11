@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/10 16:04:58 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:03:29 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 #include <sys/types.h>
 #include "../libft/libft.h"
 
-# define clear() printf("\033[H\033[J")
 # define STDERR 2
 # define STDOUT 1
 # define SYNTAX_ERROR "syntax error near unexpected token `"
@@ -40,6 +39,7 @@ typedef struct s_data
 {
 	int		exitcode;
 	int		pid;
+	int		in_exec;
 	int		error;
 	int		save_stdin;
 	int		save_stdout;

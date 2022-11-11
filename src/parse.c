@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/10 19:30:57 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:00:54 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	process(t_link *link)
 	
 	// close(g_data->fd_pipe[0]);
 	// dup2(g_data->fd_pipe, );
+	g_data->in_exec = 1;
 	if (pipe(link->pipe_fd) == -1)
 		exit (-1);
 	g_data->pid = fork();
