@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/11 20:00:54 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:02:37 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,13 @@ char	**space_split(char *cmd)
     while (matrix[y] != NULL)
     {
         x = 0;
-        while (matrix[y][x] && matrix[y][x] != '\'')
-            x++;
-        if (matrix[y][x] && matrix[y][x + 1])
-            x++;
-        while (matrix[y][x] && matrix[y][x] != '\'')
+        while (matrix[y][x] && matrix[y][x] != '\0')
         {
             if (matrix[y][x] == 1)
-                matrix[y][x] = ' ';
-            x++;
+            {    
+				matrix[y][x] = ' ';
+			}
+			x++;
         }
         y++;
     }
@@ -130,10 +128,10 @@ void	parse_loop(char **checked_line)
 			syntax_error(g_data->buffer + i);
 		if (g_data->buffer[i] == '\'')
 		{
-			i++;
-			if (g_data->buffer[i] == ' ' && g_data->buffer[i++])
-				g_data->buffer[i] = 1;
-			printf("str: %s\n", g_data->buffer);
+			*checked_line = char_join(*checked_line, g_data->buffer[++i]);
+			if (g_data->buffer[i] == ' ')
+				*checked_line = char_join(*checked_line, 1);
+			printf("str: %s\n", *checked_line);
 		}
 		if (g_data->buffer[i] == '|')
 		{
