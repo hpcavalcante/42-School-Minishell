@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/12 19:02:37 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:26:44 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,34 @@ char	**space_split(char *cmd)
     return (matrix);
 }
 
+int	strchr_count(char *str, int c)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = ft_strlen(str);
+	while (i > -1)
+	{
+		if (str[i] == (unsigned char)c)
+			j++;
+		i--;
+	}
+	return (j);
+}
+
+int	check_quotes(char *str)
+{
+	if (strchr_count(g_data->buffer, '\'') % 2 != 0 || strchr_count(g_data->buffer, '\"') % 2 != 0)
+	{	
+		write(STDERR, "Error: unclosed quotes\n", 24);
+		g_data->error = 1;
+		g_data->exitcode = 1;
+		return (0);
+	}
+	return (1);
+}
+
 void	parse_loop(char **checked_line)
 {
 	int	i;
@@ -126,7 +154,7 @@ void	parse_loop(char **checked_line)
 		if (g_data->buffer[i] == '&' || g_data->buffer[i] == ';' || g_data->buffer[i] == '\\'\
 		||g_data->buffer[i] == '(' || g_data->buffer[i] == ')' || g_data->buffer[i] == '*')
 			syntax_error(g_data->buffer + i);
-		if (g_data->buffer[i] == '\'')
+		if (g_data->buffer[i] == '\'' || g_data->buffer[i] == '\"')
 		{
 			*checked_line = char_join(*checked_line, g_data->buffer[++i]);
 			if (g_data->buffer[i] == ' ')
@@ -166,6 +194,8 @@ void	parse(t_link *link)
 	new = (t_link *) malloc (sizeof(t_link));
 	init_linked_list(new);
 	checked_line = NULL;
+	if (!check_quotes(g_data->buffer))
+		return ;
 	parse_loop(&checked_line);
 	//printf("%s %s\n%s %s\n%s %s\n", g_data->link->cmd[0], g_data->link->cmd[1], g_data->link->next->cmd[0], g_data->link->next->cmd[1], g_data->link->next->next->cmd[0], g_data->link->next->next->cmd[1]);
 	
