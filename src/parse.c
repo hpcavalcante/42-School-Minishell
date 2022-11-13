@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/12 23:09:29 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:44:27 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int		check_syntax(char c)
 
 int		parse_loop(char **checked_line)
 {
-	int	i;
+	int		i;
 	char	quote;
 
 	i = 0;

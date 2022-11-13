@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/07 17:18:52 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:54:57 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*get_path(t_link *link, char **path_env)
 		free (path);
 		count++;
 	}
+	close (link->pipe_fd[1]);
+	write (STDERR,": command not found\n", 20);
 	exit (127);
 }
 
