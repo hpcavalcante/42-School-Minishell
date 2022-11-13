@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/12 23:44:27 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/13 02:58:12 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ void	process(t_link *link)
 
 void	syntax_error(char c)
 {
-	// char	temp;
-
-	// temp = str[0];
 	ft_putstr_fd(SYNTAX_ERROR, STDERR);
 	ft_putchar_fd(c, STDERR);
 	write(STDERR,"'\n", 3);
@@ -80,7 +77,6 @@ void	parse_pipe(char **checked_line)
 	}
 	while (temp->next != NULL)
 		temp = temp->next;
-	//printf("LINE 0: %s\n", *checked_line);
 	new->cmd = ft_split(*checked_line, ' ');
 	linked_list(temp, new);
 	new = (t_link *) malloc (sizeof(t_link));
@@ -132,7 +128,7 @@ int	check_quotes(char *str)
 {
 	if (strchr_count(g_data->buffer, '\'') % 2 != 0 || strchr_count(g_data->buffer, '\"') % 2 != 0)
 	{	
-		write(STDERR, "Error: unclosed quotes\n", 24);
+		write(STDERR, "error: unclosed quotes\n", 24);
 		g_data->error = 1;
 		g_data->exitcode = 1;
 		return (0);
@@ -189,7 +185,10 @@ int		parse_loop(char **checked_line)
 			*checked_line = char_join(*checked_line, g_data->buffer[i++]);
 	}
 	if (*checked_line != NULL)
+	{
 		command(*checked_line);
+		*checked_line = NULL;
+	}
 	return (1);
 }
 
@@ -201,20 +200,12 @@ int	parse(t_link *link)
 	new = (t_link *) malloc (sizeof(t_link));
 	init_linked_list(new);
 	checked_line = NULL;
+	link->cmd = NULL;
 	if (!check_quotes(g_data->buffer))
 		return (0);
 	if (!parse_loop(&checked_line))
 		return (0);
 	return (1);
-	//printf("%s %s\n%s %s\n%s %s\n", g_data->link->cmd[0], g_data->link->cmd[1], g_data->link->next->cmd[0], g_data->link->next->cmd[1], g_data->link->next->next->cmd[0], g_data->link->next->next->cmd[1]);
-	
-	// process(link);
-	// if (checked_line != NULL)
-	// 	new->cmd = get_cmd(checked_line);
-	// free (checked_line);
-	// linked_list(link, new);
-	// if (link->cmd == NULL)
-	// 	g_data->error = 1;
 }
 
 void	linked_list(t_link *link, t_link *new)

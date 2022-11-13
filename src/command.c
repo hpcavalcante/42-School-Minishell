@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 23:03:00 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/12 23:08:12 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/13 02:42:16 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ void	command(char *checked_line)
 	linked_list(temp, new);
 	new = (t_link *) malloc (sizeof(t_link));
 	init_linked_list(new);
-	checked_line = NULL;
 	temp = g_data->link;
 }

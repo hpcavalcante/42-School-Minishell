@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/12 23:54:57 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/13 02:56:23 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,26 @@ char	**find_env(char **path_env)
 	return (matrix);
 }
 
+void	free_matrix(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != NULL)
+		free(s[i++]);
+	free(s);
+}
+
+void	exit_error_path(char **path, t_link *list)
+{
+	if (path != NULL)
+		free_matrix(path);
+	write (STDERR, list->cmd[0], ft_strlen(list->cmd[0]));
+	write (STDERR, ": command not found\n", 20);
+	close (list->pipe_fd[1]);
+	//free_all();
+	exit (127);
+}
 char	*get_path(t_link *link, char **path_env)
 {
 	int		count;
@@ -40,16 +60,15 @@ char	*get_path(t_link *link, char **path_env)
 		temp = ft_strjoin(matrix[count], "/");
 		path = ft_strjoin(temp, link->cmd[0]);
 		free (temp);
-		if (access(path, F_OK | X_OK) == 0)
+		if (access(path, F_OK) == 0)
 		{
+			free_matrix(matrix);
 			return (path);
 		}
 		free (path);
 		count++;
 	}
-	close (link->pipe_fd[1]);
-	write (STDERR,": command not found\n", 20);
-	exit (127);
+	exit_error_path(matrix, link);
 }
 
 int	count_find(char *str_cmd)
