@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/12 19:26:44 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:57:26 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,13 @@ void	process(t_link *link)
 	parent_process(link);
 }
 
-void	syntax_error()
+void	syntax_error(char c)
 {
+	// char	temp;
+
+	// temp = str[0];
 	ft_putstr_fd(SYNTAX_ERROR, STDERR);
-	ft_putchar_fd(g_data->buffer[0], STDERR);
+	ft_putchar_fd(c, STDERR);
 	write(STDERR,"'\n", 3);
 	g_data->exitcode = STDERR;
 	g_data->error = STDOUT;
@@ -72,12 +75,12 @@ void	parse_pipe(char **checked_line)
 	temp = g_data->link;
 	if (g_data->buffer[0] == '|')
 	{
-		syntax_error();
+		syntax_error(0);
 		return ;
 	}
 	while (temp->next != NULL)
 		temp = temp->next;
-	printf("LINE 0: %s\n", *checked_line);
+	//printf("LINE 0: %s\n", *checked_line);
 	new->cmd = ft_split(*checked_line, ' ');
 	linked_list(temp, new);
 	new = (t_link *) malloc (sizeof(t_link));
@@ -137,9 +140,21 @@ int	check_quotes(char *str)
 	return (1);
 }
 
-void	parse_loop(char **checked_line)
+int		check_syntax(char c)
+{
+	if (c == '&' || c == ';' || c == '\\'\
+		||c == '(' || c == ')' || c == '*')
+		{	
+			syntax_error(c);
+			return (0);
+		}
+	return (1);
+}
+
+int		parse_loop(char **checked_line)
 {
 	int	i;
+	char	quote;
 	t_link	*temp;
 	t_link	*new;
 
@@ -151,42 +166,51 @@ void	parse_loop(char **checked_line)
 	{
 		while (g_data->buffer[i] == ' ' && *checked_line == NULL)
 			i++;
-		if (g_data->buffer[i] == '&' || g_data->buffer[i] == ';' || g_data->buffer[i] == '\\'\
-		||g_data->buffer[i] == '(' || g_data->buffer[i] == ')' || g_data->buffer[i] == '*')
-			syntax_error(g_data->buffer + i);
 		if (g_data->buffer[i] == '\'' || g_data->buffer[i] == '\"')
 		{
-			*checked_line = char_join(*checked_line, g_data->buffer[++i]);
-			if (g_data->buffer[i] == ' ')
-				*checked_line = char_join(*checked_line, 1);
-			printf("str: %s\n", *checked_line);
+			quote = g_data->buffer[i];
+			i++;
+			while (g_data->buffer[i] != quote)
+			{
+				*checked_line = char_join(*checked_line, g_data->buffer[i]);
+				if (g_data->buffer[i] == ' ')
+					*checked_line = char_join(*checked_line, 1);
+				i++;
+			}
+			if (g_data->buffer[i] == quote)
+				i++;
+			if (g_data->buffer[i] == '\0')
+				break;
 		}
+		if (!check_syntax(g_data->buffer[i]))
+		 	return (0);
 		if (g_data->buffer[i] == '|')
 		{
 			parse_pipe(checked_line);
 			*checked_line = NULL;
 			i++;
 		}
-		else if (g_data->buffer[i] != '\0')
+		else
 			*checked_line = char_join(*checked_line, g_data->buffer[i++]);
 	}
 	if (*checked_line != NULL)
 	{
-		printf("LINE 1: %s\n", *checked_line);
+		//printf("LINE 1: %s\n", *checked_line);
 		while (temp->next != NULL)
 			temp = temp->next;
 		new->cmd = space_split(*checked_line);
-		for (int i = 0; new->cmd[i]; i++)
-			printf("out: %s\n", new->cmd[i]);
+		// for (int i = 0; new->cmd[i]; i++)
+		// 	printf("out: %s\n", new->cmd[i]);
 		linked_list(temp, new);
 		new = (t_link *) malloc (sizeof(t_link));
 		init_linked_list(new);
 		*checked_line = NULL;
 		temp = g_data->link;
 	}
+	return (1);
 }
 
-void	parse(t_link *link)
+int	parse(t_link *link)
 {
 	char	*checked_line;
 	t_link	*new;
@@ -195,8 +219,10 @@ void	parse(t_link *link)
 	init_linked_list(new);
 	checked_line = NULL;
 	if (!check_quotes(g_data->buffer))
-		return ;
-	parse_loop(&checked_line);
+		return (0);
+	if (!parse_loop(&checked_line))
+		return (0);
+	return (1);
 	//printf("%s %s\n%s %s\n%s %s\n", g_data->link->cmd[0], g_data->link->cmd[1], g_data->link->next->cmd[0], g_data->link->next->cmd[1], g_data->link->next->next->cmd[0], g_data->link->next->next->cmd[1]);
 	
 	// process(link);

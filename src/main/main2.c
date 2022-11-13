@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/11 20:04:39 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/12 22:50:16 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ void	init_shell()
 			link = (t_link *)malloc(sizeof (t_link));
 			link->next = NULL;
 			g_data->link = link;
-			parse(g_data->link);
-			while (g_data->link != NULL)
+			if (!parse(g_data->link))
+				g_data->error = 1;
+			while (g_data->link != NULL && g_data->error == 0)
 			{
 				process(g_data->link);
 				g_data->link = g_data->link->next;	
