@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/12 22:47:44 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:06:13 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	**matrix_cmd(char *cmd);
 char	**get_cmd(char *cmd);
 void	process(t_link *link);
 int		parse();
+void	command(char *checked_line);
+char	**space_split(char *cmd);
 void	child_process();
 void	kill_loop(int signal);
 void	exit_code(int signal);

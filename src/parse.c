@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/12 22:57:26 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/12 23:09:29 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,13 +155,8 @@ int		parse_loop(char **checked_line)
 {
 	int	i;
 	char	quote;
-	t_link	*temp;
-	t_link	*new;
 
-	new = (t_link *) malloc (sizeof(t_link));
-	init_linked_list(new);
 	i = 0;
-	temp = g_data->link;
 	while (g_data->buffer[i] != '\0')
 	{
 		while (g_data->buffer[i] == ' ' && *checked_line == NULL)
@@ -194,19 +189,7 @@ int		parse_loop(char **checked_line)
 			*checked_line = char_join(*checked_line, g_data->buffer[i++]);
 	}
 	if (*checked_line != NULL)
-	{
-		//printf("LINE 1: %s\n", *checked_line);
-		while (temp->next != NULL)
-			temp = temp->next;
-		new->cmd = space_split(*checked_line);
-		// for (int i = 0; new->cmd[i]; i++)
-		// 	printf("out: %s\n", new->cmd[i]);
-		linked_list(temp, new);
-		new = (t_link *) malloc (sizeof(t_link));
-		init_linked_list(new);
-		*checked_line = NULL;
-		temp = g_data->link;
-	}
+		command(*checked_line);
 	return (1);
 }
 

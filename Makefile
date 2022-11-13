@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/10/27 15:41:55 by gissao-m         ###   ########.fr        #
+#    Updated: 2022/11/12 23:05:13 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ PATH_OBJS = ./objs/
 SRC =	$(PATH_MAIN)main2.c\
 		$(PATH_SRC)parse.c\
 		$(PATH_SRC)parse_utils.c\
-		$(PATH_SRC)tokenizer.c\
+		$(PATH_SRC)command.c\
 
 OBJS = $(patsubst $(PATH_SRC)%.c, $(PATH_OBJS)%.o, $(SRC))
 
