@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/13 02:58:12 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:34:30 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,25 @@ void	parent_process(t_link *link)
 	close (link->pipe_fd[0]);
 }
 
+int	check_built_in(t_link *link)
+{
+	if (ft_str_check(link->cmd[0], "echo"))
+		return (1);
+	else if (ft_str_check(link->cmd[0], "pwd"))
+		return (1);
+	else if (ft_str_check(link->cmd[0], "export"))
+		return (1);
+	else if (ft_str_check(link->cmd[0], "env"))
+		return (1);
+	else if (ft_str_check(link->cmd[0], "exit"))
+		return (1);
+	else if (ft_str_check(link->cmd[0], "unset"))
+		return (1);
+	else if (ft_str_check(link->cmd[0], "cd"))
+		return (1);
+	else
+		return (0);
+}
 void	process(t_link *link)
 {
 	
@@ -44,13 +63,19 @@ void	process(t_link *link)
 	g_data->in_exec = 1;
 	if (pipe(link->pipe_fd) == -1)
 		exit (-1);
-	g_data->pid = fork();
-	if (g_data->pid == 0)
+	// if (check_built_in(link))
+	// 	printf("é built-in\n");
+		//exec_built_in(link);
+	else
 	{
-		g_data->link->path = get_path(link, g_data->envp);
-		child_process();
+		g_data->pid = fork();
+		if (g_data->pid == 0)
+		{
+			g_data->link->path = get_path(link, g_data->envp);
+			child_process();
+		}
+		parent_process(link);
 	}
-	parent_process(link);
 }
 
 void	syntax_error(char c)
