@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/16 15:52:28 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/16 17:46:46 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	int		error;
 	int		save_stdin;
 	int		save_stdout;
+	char	*checked_line;
 	char 	**envp;
 	char 	*buffer;
 	t_link	*link;
