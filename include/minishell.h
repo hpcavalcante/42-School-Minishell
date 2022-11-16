@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/12 23:06:13 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:52:28 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 typedef struct s_link
 {
 	char			**cmd;
+	char			*file_in;
+	char			*file_out;
+	int				fd_out;
+	int				fd_in;
 	char			*path;
 	int				pipe_fd[2];
 	struct s_link	*next;
@@ -39,6 +43,7 @@ typedef struct s_data
 {
 	int		exitcode;
 	int		pid;
+	int		here_doc;
 	int		in_exec;
 	int		error;
 	int		save_stdin;
