@@ -6,7 +6,7 @@
 #    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/11/16 15:32:27 by gissao-m         ###   ########.fr        #
+#    Updated: 2022/11/16 19:04:30 by gissao-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ PATH_OBJS = ./objs/
 
 SRC =	$(PATH_MAIN)main.c\
 		$(PATH_SRC)parse.c\
+		$(PATH_SRC)parse_cond.c\
 		$(PATH_SRC)parse_utils.c\
 		$(PATH_SRC)command.c\
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/16 17:46:46 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:41:17 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define STDERR 2
 # define STDOUT 1
 # define SYNTAX_ERROR "syntax error near unexpected token `"
+# define ERROR_HD_NL "syntax error near unexpected token `newline'\n"
 
 typedef struct s_link
 {
@@ -67,11 +68,13 @@ char	**space_split(char *cmd);
 void	child_process();
 void	kill_loop(int signal);
 void	exit_code(int signal);
-void	tokenizer();
 void	linked_list(t_link *link, t_link *new);
 void	init_linked_list(t_link *new);
 char	*char_join(char *str1, char c);
 int		ft_str_check(const char *s1, const char *s2);
+int		redirection();
+void	redirection_error(char *cmd);
+void	check_syntax_red(char *cmd);
 
 extern t_data *g_data;
 #endif
