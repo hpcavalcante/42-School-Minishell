@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/16 19:41:17 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:27:57 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
@@ -32,11 +33,13 @@ typedef struct s_link
 {
 	char			**cmd;
 	char			*file_in;
-	char			*file_out;
+	char			*created_file;
 	int				fd_out;
 	int				fd_in;
 	char			*path;
 	int				pipe_fd[2];
+	int				delimiter;
+	int				append;
 	struct s_link	*next;
 }	t_link;
 

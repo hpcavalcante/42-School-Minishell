@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/16 19:59:24 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:35:32 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,8 @@ void	linked_list(t_link *link, t_link *new)
 {
 	if (link->cmd == NULL)
 	{
+		link->append = new->append;
+		link->created_file = new->created_file;
 		link->cmd = new->cmd;
 		// link->next = new->next;
 		link->path = new->path;
@@ -258,6 +260,8 @@ void	init_linked_list(t_link *new)
 	new->cmd = NULL;
 	new->next = NULL;
 	new->path = NULL;
+	new->created_file = NULL;
+	new->append = 0;
 }
 
 char	*char_join(char *str1, char c)
