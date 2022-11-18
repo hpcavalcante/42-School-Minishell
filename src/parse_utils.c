@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/16 15:24:51 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/18 18:20:19 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	exit_error_path(char **path, t_link *list)
 	//free_all();
 	exit (127);
 }
+
 char	*get_path(t_link *link, char **path_env)
 {
 	int		count;
@@ -60,7 +61,7 @@ char	*get_path(t_link *link, char **path_env)
 		temp = ft_strjoin(matrix[count], "/");
 		path = ft_strjoin(temp, link->cmd[0]);
 		free (temp);
-		if (access(path, F_OK) == 0)
+		if (access(path, F_OK | X_OK) == 0)
 		{
 			free_matrix(matrix);
 			return (path);
@@ -69,6 +70,7 @@ char	*get_path(t_link *link, char **path_env)
 		count++;
 	}
 	exit_error_path(matrix, link);
+	exit (130);
 }
 
 int	count_find(char *str_cmd)

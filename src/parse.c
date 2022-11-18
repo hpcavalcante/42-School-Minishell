@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/18 15:06:12 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/18 18:12:21 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,9 @@ int	parse_pipe(int i)
 	temp = g_data->link;
 	if (g_data->buffer[0] == '|')
 	{
-		syntax_error(0);
-		return (0);
+		syntax_error('|');
+		i = ft_strlen(g_data->buffer);
+		return(i);
 	}
 	while (temp->next != NULL)
 		temp = temp->next;
