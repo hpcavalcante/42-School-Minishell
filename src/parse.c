@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/18 12:35:32 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/18 15:06:12 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,8 +206,8 @@ int		parse_loop(t_link *link)
 			i = parse_quotes(i);
 		if (!check_syntax(g_data->buffer[i]))
 		 	return (0);
-		if (g_data->buffer[i] == '>')
-			i = redirection(i);
+		// if (g_data->buffer[i] == '>')
+		// 	i = redirection(i);
 		// printf("redirect: %d\n", redirection(link));
 		if (g_data->buffer[i] == '|')
 			i = parse_pipe(i);
