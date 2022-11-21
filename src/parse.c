@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/18 18:12:21 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:19:19 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ int	parse_quotes(int i)
 	return (i);
 }
 
-int		parse_loop(t_link *link)
+int		parse_loop(t_link *link, t_link *new)
 {
 	int		i;
 
@@ -207,8 +207,8 @@ int		parse_loop(t_link *link)
 			i = parse_quotes(i);
 		if (!check_syntax(g_data->buffer[i]))
 		 	return (0);
-		// if (g_data->buffer[i] == '>')
-		// 	i = redirection(i);
+		if (g_data->buffer[i] == '>')
+			i = redirection(new, '>');
 		// printf("redirect: %d\n", redirection(link));
 		if (g_data->buffer[i] == '|')
 			i = parse_pipe(i);
@@ -230,7 +230,7 @@ int	parse(t_link *link)
 	link->cmd = NULL;
 	if (!check_quotes(g_data->buffer))
 		return (0);
-	if (!parse_loop(link))
+	if (!parse_loop(link, new))
 		return (0);
 	return (1);
 }
