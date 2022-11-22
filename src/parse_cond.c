@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/11/21 17:13:53 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/22 12:07:59 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int		redirection(t_link *new, char operator)
 	&& cmd[i] != '&' && cmd[i] != ';' && cmd[i] != '\0' && cmd[i] != '(' && cmd[i] != ')')
 		i++;
 	if (i == jump_space)
+	{
 		redirection_error(cmd);
+	}
 	j = 0;
 	if (cmd[j] == '>' && cmd[j + 1] == '>')
 		new->append = 1;
@@ -42,13 +44,36 @@ void	redirection_error(char *cmd)
 	int	i;
 
 	i = 0;
-	if (cmd[i] == '>' || cmd[i] == '>' && cmd[i + 1] == '>')
+	if (cmd[i + 3] == '>')
 	{
-		for (i; cmd[i]; i++)
-			printf("cmd: %s\n", cmd);
-		write (STDERR, ERROR_HD_NL, 47);
+		printf ("AQUI!");
+		write(STDERR, SYNTAX_ERROR, 36);
+		write(STDERR, cmd, 1);
+		write(STDERR, cmd, 1);
+		write(STDERR, "'\n", 3);
 		g_data->error = 1;
 		g_data->exitcode = 2;
+		return ;
+	}
+	
+	else if ((cmd[i] == '>' || cmd[i] == '<') && (cmd[i + 1] == '>' || cmd[i + 1] == '<') && (cmd[i + 2] == '>' || cmd[i + 2] == '<'))
+	{
+		printf ("AQUI!");
+		write(STDERR, SYNTAX_ERROR, 36);
+		write(STDERR, cmd, 1);
+		write(STDERR, "'\n", 3);
+		g_data->error = 1;
+		g_data->exitcode = 2;
+		return ;
+	}
+	else if (cmd[i] == '>' || cmd[i] == '>' && cmd[i + 1] == '>')
+	{
+		// for (i; cmd[i]; i++)
+		// 	printf("cmd: %s\n", cmd);
+		write (STDERR, ERROR_HD_NL, 46);
+		g_data->error = 1;
+		g_data->exitcode = 2;
+		return ;
 	}
 	check_syntax_red(cmd);
 	
@@ -59,19 +84,11 @@ void	check_syntax_red(char *cmd)
 	int i;
 
 	i = 0;
-	if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|' || cmd[i] == '(' || cmd[i] == ')' || cmd[i] == '>' || cmd[i] == '<')
+	if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|' || cmd[i] == '(' || cmd[i] == ')')
 	{
 		write(STDERR, SYNTAX_ERROR, 37);
 		write(STDERR, cmd, 1);
 		write(STDERR, "'\n", 3);
 	}
-	// while (cmd[i])
-	// {	
-	// else if ((cmd[i] == '>' || cmd[i] == '<') && (cmd[i + 1] == '>' || cmd[i + 1] == '<') && (cmd[i + 2] == '>' || cmd[i + 2] == '<'))
-	// 	{
-	// 		write(STDERR, SYNTAX_ERROR, 37);
-	// 		write(STDERR, cmd, 1);
-	// 		write(STDERR, "'\n", 2);
-	// 	}
-	// }
+
 }
