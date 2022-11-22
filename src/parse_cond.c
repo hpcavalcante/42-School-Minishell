@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/11/22 12:07:59 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/22 12:50:00 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,37 @@ void	redirection_error(char *cmd)
 	int	i;
 
 	i = 0;
-	if (cmd[i + 3] == '>')
+	if (cmd[i + 5] == '<')
+	{
+		write(STDERR, SYNTAX_ERROR, 36);
+		write(STDERR, cmd, 1);
+		write(STDERR, cmd, 1);
+		write(STDERR, cmd, 1);
+		write(STDERR, "'\n", 3);
+		g_data->error = 1;
+		g_data->exitcode = 2;
+	}
+
+	else if (cmd[i + 4] == '<')
+	{
+		write(STDERR, SYNTAX_ERROR, 36);
+		write(STDERR, cmd, 1);
+		write(STDERR, cmd, 1);
+		write(STDERR, "'\n", 3);
+		g_data->error = 1;
+		g_data->exitcode = 2;
+	}
+
+	else if (cmd[i + 3] == '<')
+	{
+		write(STDERR, SYNTAX_ERROR, 36);
+		write(STDERR, cmd, 1);
+		write(STDERR, "'\n", 3);
+		g_data->error = 1;
+		g_data->exitcode = 2;
+	}
+
+	else if (cmd[i + 3] == '>')
 	{
 		printf ("AQUI!");
 		write(STDERR, SYNTAX_ERROR, 36);
@@ -53,27 +83,24 @@ void	redirection_error(char *cmd)
 		write(STDERR, "'\n", 3);
 		g_data->error = 1;
 		g_data->exitcode = 2;
-		return ;
 	}
 	
-	else if ((cmd[i] == '>' || cmd[i] == '<') && (cmd[i + 1] == '>' || cmd[i + 1] == '<') && (cmd[i + 2] == '>' || cmd[i + 2] == '<'))
+	else if (cmd[i + 2] == '>')
 	{
-		printf ("AQUI!");
+		printf ("AQUI!\n");
 		write(STDERR, SYNTAX_ERROR, 36);
 		write(STDERR, cmd, 1);
 		write(STDERR, "'\n", 3);
 		g_data->error = 1;
 		g_data->exitcode = 2;
-		return ;
 	}
-	else if (cmd[i] == '>' || cmd[i] == '>' && cmd[i + 1] == '>')
+	else if ((cmd[i] == '>' || cmd[i + 1] == '>') || (cmd[i] == '<' || cmd[i + 1] == '<' || cmd[i + 2] == '<'))
 	{
 		// for (i; cmd[i]; i++)
 		// 	printf("cmd: %s\n", cmd);
 		write (STDERR, ERROR_HD_NL, 46);
 		g_data->error = 1;
 		g_data->exitcode = 2;
-		return ;
 	}
 	check_syntax_red(cmd);
 	
