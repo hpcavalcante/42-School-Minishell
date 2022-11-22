@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 12:25:41 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/11/18 15:04:08 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:54:07 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,4 @@ void	handle_output_file(t_link *link)
 		dup2(link->fd_out, STDOUT);
 		//aqui de fato estou mandando para a saida padrao.
 	}
-		
 }

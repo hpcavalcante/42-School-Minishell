@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/21 12:19:52 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:05:00 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,12 @@ int		ft_str_check(const char *s1, const char *s2);
 int		redirection(t_link *new, char operator);
 void	redirection_error(char *cmd);
 void	check_syntax_red(char *cmd);
+void	check_signs(char *cmd);
 void	handle_output_file(t_link *link);
+void	write_error_red_NL(char *cmd);
+void	write_error_red_1_sign(char *cmd);
+void	write_error_red_2_signs(char *cmd);
+void	write_error_red_3_signs(char *cmd);
 
 extern t_data *g_data;
 #endif

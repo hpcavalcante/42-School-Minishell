@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/11/22 12:50:00 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:42:35 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,81 +41,81 @@ int		redirection(t_link *new, char operator)
 
 void	redirection_error(char *cmd)
 {
+	check_signs(cmd);
+	// check_syntax_red(cmd);
+}
+
+// void	check_syntax_red(char *cmd)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	if (cmd[i] == '&' && cmd[i + 1] == '>')
+// 		write_error_red_NL(cmd);
+// 	else if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|' || cmd[i] == '(' || cmd[i] == ')')
+// 		write_error_red_1_sign(cmd);
+// }
+
+void	check_signs(char *cmd)
+{
 	int	i;
 
 	i = 0;
 	if (cmd[i + 5] == '<')
-	{
-		write(STDERR, SYNTAX_ERROR, 36);
-		write(STDERR, cmd, 1);
-		write(STDERR, cmd, 1);
-		write(STDERR, cmd, 1);
-		write(STDERR, "'\n", 3);
-		g_data->error = 1;
-		g_data->exitcode = 2;
-	}
-
+		write_error_red_3_signs(cmd);
 	else if (cmd[i + 4] == '<')
-	{
-		write(STDERR, SYNTAX_ERROR, 36);
-		write(STDERR, cmd, 1);
-		write(STDERR, cmd, 1);
-		write(STDERR, "'\n", 3);
-		g_data->error = 1;
-		g_data->exitcode = 2;
-	}
-
+		write_error_red_2_signs(cmd);
 	else if (cmd[i + 3] == '<')
-	{
-		write(STDERR, SYNTAX_ERROR, 36);
-		write(STDERR, cmd, 1);
-		write(STDERR, "'\n", 3);
-		g_data->error = 1;
-		g_data->exitcode = 2;
-	}
-
+		write_error_red_1_sign(cmd);
 	else if (cmd[i + 3] == '>')
-	{
-		printf ("AQUI!");
-		write(STDERR, SYNTAX_ERROR, 36);
-		write(STDERR, cmd, 1);
-		write(STDERR, cmd, 1);
-		write(STDERR, "'\n", 3);
-		g_data->error = 1;
-		g_data->exitcode = 2;
-	}
-	
+		write_error_red_2_signs(cmd);
 	else if (cmd[i + 2] == '>')
+		write_error_red_1_sign(cmd);
+	else if ((cmd[i] == '>' || cmd[i + 1] == '>') ||\
+	(cmd[i] == '<' || cmd[i + 1] == '<' || cmd[i + 2] == '<'))
+		write_error_red_NL(cmd);
+	else if (cmd[i] == '&' && cmd[i + 1] == '>')
 	{
-		printf ("AQUI!\n");
-		write(STDERR, SYNTAX_ERROR, 36);
-		write(STDERR, cmd, 1);
-		write(STDERR, "'\n", 3);
-		g_data->error = 1;
-		g_data->exitcode = 2;
+		printf("entro aqui");
+		write_error_red_NL(cmd);
 	}
-	else if ((cmd[i] == '>' || cmd[i + 1] == '>') || (cmd[i] == '<' || cmd[i + 1] == '<' || cmd[i + 2] == '<'))
-	{
-		// for (i; cmd[i]; i++)
-		// 	printf("cmd: %s\n", cmd);
-		write (STDERR, ERROR_HD_NL, 46);
-		g_data->error = 1;
-		g_data->exitcode = 2;
-	}
-	check_syntax_red(cmd);
-	
+	else if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|' || cmd[i] == '(' || cmd[i] == ')')
+		write_error_red_1_sign(cmd);
 }
 
-void	check_syntax_red(char *cmd)
+void	write_error_red_NL(char *cmd)
 {
-	int i;
+	write (STDERR, ERROR_HD_NL, 46);
+	g_data->error = 1;
+	g_data->exitcode = 2;
+}
 
-	i = 0;
-	if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|' || cmd[i] == '(' || cmd[i] == ')')
-	{
-		write(STDERR, SYNTAX_ERROR, 37);
-		write(STDERR, cmd, 1);
-		write(STDERR, "'\n", 3);
-	}
+void	write_error_red_1_sign(char *cmd)
+{
+	write(STDERR, SYNTAX_ERROR, 36);
+	write(STDERR, cmd, 1);
+	write(STDERR, "'\n", 3);
+	g_data->error = 1;
+	g_data->exitcode = 2;
+}
 
+void	write_error_red_2_signs(char *cmd)
+{
+	write(STDERR, SYNTAX_ERROR, 36);
+	write(STDERR, cmd, 1);
+	write(STDERR, cmd, 1);
+	write(STDERR, "'\n", 3);
+	g_data->error = 1;
+	g_data->exitcode = 2;
+}
+
+void	write_error_red_3_signs(char *cmd)
+{
+	write(STDERR, SYNTAX_ERROR, 36);
+	write(STDERR, cmd, 1);
+	write(STDERR, cmd, 1);
+	write(STDERR, cmd, 1);
+	write(STDERR, "'\n", 3);
+	g_data->error = 1;
+	g_data->exitcode = 2;
 }

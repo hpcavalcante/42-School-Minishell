@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/22 12:38:05 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:45:07 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int		check_syntax(char c)
 	if (c == '&' || c == ';' || c == '\\'\
 		||c == '(' || c == ')' || c == '*')
 		{	
+			printf("foi aqui\n");
 			syntax_error(c);
 			return (0);
 		}
