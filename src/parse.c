@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/22 17:45:07 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:25:55 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int	strchr_count(char *str, int c)
 	return (j);
 }
 
-int	check_quotes(char *str)
+int	check_quotes()
 {
 	if (strchr_count(g_data->buffer, '\'') % 2 != 0 || strchr_count(g_data->buffer, '\"') % 2 != 0)
 	{	
@@ -195,7 +195,7 @@ int	parse_quotes(int i)
 	return (i);
 }
 
-int		parse_loop(t_link *link, t_link *new)
+int		parse_loop(t_link *new)
 {
 	int		i;
 
@@ -237,9 +237,9 @@ int	parse(t_link *link)
 	init_linked_list(new);
 	g_data->checked_line = NULL;
 	link->cmd = NULL;
-	if (!check_quotes(g_data->buffer))
+	if (!check_quotes())
 		return (0);
-	if (!parse_loop(link, new))
+	if (!parse_loop(new))
 		return (0);
 	return (1);
 }

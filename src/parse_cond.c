@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cond.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/11/22 17:42:35 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:26:24 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	check_signs(char *cmd)
 		write_error_red_1_sign(cmd);
 }
 
-void	write_error_red_NL(char *cmd)
+void	write_error_red_NL()
 {
 	write (STDERR, ERROR_HD_NL, 46);
 	g_data->error = 1;

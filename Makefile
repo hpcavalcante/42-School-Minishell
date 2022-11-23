@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/11/16 19:04:30 by gissao-m         ###   ########.fr        #
+#    Updated: 2022/11/23 17:22:35 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = gcc
 INCLUDE = -I ./include/
-CFLAGS = -g $(INCLUDE)
+CFLAGS = -g $(INCLUDE) -Wall -Wextra -Werror
 CREADLINE = -lreadline
 
 RM = rm -rf

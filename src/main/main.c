@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/18 12:20:20 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:23:43 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,6 @@ int	main(int argc, char **argv, char **envp)
 	link = (t_link *)malloc(sizeof (t_link));
 	link->next = NULL;
 	g_data->link = link;
-	link->cmd == NULL;
-	link->path == NULL;
 	init_shell();
 }
 

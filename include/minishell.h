@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/22 16:05:00 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:26:43 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	redirection_error(char *cmd);
 void	check_syntax_red(char *cmd);
 void	check_signs(char *cmd);
 void	handle_output_file(t_link *link);
-void	write_error_red_NL(char *cmd);
+void	write_error_red_NL();
 void	write_error_red_1_sign(char *cmd);
 void	write_error_red_2_signs(char *cmd);
 void	write_error_red_3_signs(char *cmd);
