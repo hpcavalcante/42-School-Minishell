@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/11/25 16:37:20 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:02:46 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ int		redirection(t_link *new, char operator)
 		new->append = 1;
 	// else if (cmd[0] == '<' && cmd[1] == '<')
 	// 	new->delimiter = 1;
+	printf("init_buffer: %d", init_buffer);
+	printf("i: %d", i);
 	aux = ft_substr(cmd, init_buffer, i - init_buffer);
+	printf("substr: %s\n", aux);
 	if_is_a_directory(aux);
-	if (operator == '>' || operator == '<')
+	if (operator == '>')
 		add_redirect(new, aux, operator);
 	return (i);
 }
@@ -71,16 +74,17 @@ void	handle_output_file(t_link *link)
 {
 	if (link->file_out != NULL)
 	{
-		if(access(link->file_out, F_OK) == -1)
+		if (access(link->file_out, F_OK) == -1)
 		{
-			link->fd_out = open(link->file_out, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			link->fd_out = open(link->file_out, O_CREAT | \
+			O_WRONLY | O_APPEND, 0644);
+			printf("criar um aquivo: %s\n", link->file_out);
 		}
 		else if (access(link->file_out, F_OK) == 0 && link->append == 0)
 			link->fd_out = open(link->file_out, O_WRONLY | O_TRUNC);
 		else if (access(link->file_out, F_OK) == 0 && link->append == 1)
 			link->fd_out = open(link->file_out, O_WRONLY | O_APPEND);
 		dup2(link->fd_out, STDOUT);
-		//aqui de fato estou mandando para a saida padrao.
 	}
 }
 
