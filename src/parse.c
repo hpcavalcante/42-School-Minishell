@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/25 14:51:38 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:31:36 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ void	linked_list(t_link *link, t_link *new)
 	if (link->cmd == NULL)
 	{
 		link->append = new->append;
-		link->created_file = new->created_file;
+		link->file_out = new->file_out;
 		link->cmd = new->cmd;
 		// link->next = new->next;
 		link->path = new->path;
@@ -265,7 +265,7 @@ void	init_linked_list(t_link *new)
 	new->cmd = NULL;
 	new->next = NULL;
 	new->path = NULL;
-	new->created_file = NULL;
+	new->file_out = NULL;
 	new->append = 0;
 }
 

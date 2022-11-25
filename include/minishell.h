@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/23 17:26:43 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:36:46 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
@@ -26,6 +27,7 @@
 
 # define STDERR 2
 # define STDOUT 1
+# define STDIN 0
 # define SYNTAX_ERROR "syntax error near unexpected token `"
 # define ERROR_HD_NL "syntax error near unexpected token `newline'\n"
 
@@ -33,7 +35,7 @@ typedef struct s_link
 {
 	char			**cmd;
 	char			*file_in;
-	char			*created_file;
+	char			*file_out;
 	int				fd_out;
 	int				fd_in;
 	char			*path;
@@ -79,11 +81,14 @@ int		redirection(t_link *new, char operator);
 void	redirection_error(char *cmd);
 void	check_syntax_red(char *cmd);
 void	check_signs(char *cmd);
+void	add_redirect(t_link *new, char *aux, char operator);
 void	handle_output_file(t_link *link);
 void	write_error_red_NL();
 void	write_error_red_1_sign(char *cmd);
 void	write_error_red_2_signs(char *cmd);
 void	write_error_red_3_signs(char *cmd);
+void	if_is_a_directory(char *file);
+int		check_dir(char *path);
 
 extern t_data *g_data;
 #endif
