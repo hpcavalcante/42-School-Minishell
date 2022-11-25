@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/23 17:25:55 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:51:38 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ void	parent_process(t_link *link)
 {
 	int	wstatus;
 
-	if (ft_str_check(g_data->buffer, "exit"))
-	{
-		g_data->exitcode = 1;
-		exit(g_data->exitcode);
-	}
 	close(link->pipe_fd[1]);
 	if (link->next != NULL)
 	{

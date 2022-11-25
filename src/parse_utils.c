@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/18 18:20:19 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:38:34 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char	*get_path(t_link *link, char **path_env)
 	count = 0;
 	while (matrix[count] != 0)
 	{
+		if (access(link->cmd[0], F_OK | X_OK) == 0)
+			return(link->cmd[0]);
 		temp = ft_strjoin(matrix[count], "/");
 		path = ft_strjoin(temp, link->cmd[0]);
 		free (temp);
