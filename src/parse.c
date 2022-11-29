@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/25 16:49:18 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:36:23 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ int	check_built_in(t_link *link)
 	else
 		return (0);
 }
+
+void	exec_builtin()
+{
+	pwd_builtin();
+}
+
 void	process(t_link *link)
 {
 	
@@ -58,9 +64,8 @@ void	process(t_link *link)
 	g_data->in_exec = 1;
 	if (pipe(link->pipe_fd) == -1)
 		exit (-1);
-	// if (check_built_in(link))
-	// 	printf("é built-in\n");
-		//exec_built_in(link);
+	if (check_built_in(link))
+		exec_builtin(link);
 	else
 	{
 		g_data->pid = fork();

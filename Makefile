@@ -6,7 +6,7 @@
 #    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/11/23 17:22:35 by hepiment         ###   ########.fr        #
+#    Updated: 2022/11/29 15:36:00 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC =	$(PATH_MAIN)main.c\
 		$(PATH_SRC)parse_cond.c\
 		$(PATH_SRC)parse_utils.c\
 		$(PATH_SRC)command.c\
+		$(PATH_SRC)pwd.c\
 
 OBJS = $(patsubst $(PATH_SRC)%.c, $(PATH_OBJS)%.o, $(SRC))
 
