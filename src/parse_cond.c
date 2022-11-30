@@ -6,15 +6,14 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/11/25 17:02:46 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:36:53 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		redirection(t_link *new, char operator)
+int		redirection(t_link *new, char operator, char *buffer)
 {
-	char	*cmd;
 	char	*aux;
 	int		i;
 	int		init_buffer;
@@ -22,25 +21,25 @@ int		redirection(t_link *new, char operator)
 	int		j;
 
 	i = 0;
-	cmd = g_data->buffer;
-	while (cmd[i] == ' ' || (cmd[i] == operator && i < 2))
+	// buffer = g_data->buffer;
+	while (buffer[i] == ' ' || (buffer[i] == operator && i < 2))
 		i++;
 	init_buffer = i;
-	while (cmd[i] != '<' && cmd[i] != '>' && cmd[i] != ' ' && cmd[i] != '|' \
-	&& cmd[i] != '&' && cmd[i] != ';' && cmd[i] != '\0' && cmd[i] != '(' && cmd[i] != ')')
+	while (buffer[i] != '<' && buffer[i] != '>' && buffer[i] != ' ' && buffer[i] != '|' \
+	&& buffer[i] != '&' && buffer[i] != ';' && buffer[i] != '\0' && buffer[i] != '(' && buffer[i] != ')')
 		i++;
 	if (i == init_buffer)
 	{
-		redirection_error(cmd);
+		redirection_error(buffer);
 	}
 	j = 0;
-	if (cmd[j] == '>' && cmd[j + 1] == '>')
+	if (buffer[j] == '>' && buffer[j + 1] == '>')
 		new->append = 1;
-	// else if (cmd[0] == '<' && cmd[1] == '<')
+	// else if (buffer[0] == '<' && buffer[1] == '<')
 	// 	new->delimiter = 1;
 	printf("init_buffer: %d", init_buffer);
 	printf("i: %d", i);
-	aux = ft_substr(cmd, init_buffer, i - init_buffer);
+	aux = ft_substr(buffer, init_buffer, i - init_buffer);
 	printf("substr: %s\n", aux);
 	if_is_a_directory(aux);
 	if (operator == '>')

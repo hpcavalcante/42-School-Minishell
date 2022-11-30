@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/29 15:35:49 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:22:51 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	linked_list(t_link *link, t_link *new);
 void	init_linked_list(t_link *new);
 char	*char_join(char *str1, char c);
 int		ft_str_check(const char *s1, const char *s2);
-int		redirection(t_link *new, char operator);
+int		redirection(t_link *new, char operator, char *cmd);
 void	redirection_error(char *cmd);
 void	check_syntax_red(char *cmd);
 void	check_signs(char *cmd);
