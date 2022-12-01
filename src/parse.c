@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/30 15:33:08 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:43:12 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,20 @@ int	check_built_in(t_link *link)
 		return (0);
 }
 
-void	exec_builtin()
+void	exec_builtin(t_link *link)
 {
-	pwd_builtin();
+	if (link->file_out == NULL && link->next != NULL)
+		dup2(link->pipe_fd[1], STDOUT);
+	if (ft_str_check(link->cmd[0], "echo"))
+		echo_builtin(link->cmd);
+	else if (ft_str_check(link->cmd[0], "pwd"))
+		pwd_builtin();
+	dup2(link->pipe_fd[0], STDIN);
+	dup2(g_data->save_stdout, STDOUT);
+	close(link->pipe_fd[0]);
+	close(link->pipe_fd[1]);
 }
+
 
 void	process(t_link *link)
 {

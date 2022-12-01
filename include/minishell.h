@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/01 18:30:18 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:44:50 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ void	write_error_red_2_signs(char *cmd);
 void	write_error_red_3_signs(char *cmd);
 void	if_is_a_directory(char *file);
 void	pwd_builtin();
+void	echo_builtin(char **cmd);
+void	exec_builtin(t_link *link);
 int		check_dir(char *path);
+int	checking_directory(char *path);
 
 extern t_data *g_data;
 #endif
