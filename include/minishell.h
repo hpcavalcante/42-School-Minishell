@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/01 18:44:50 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/01 19:06:54 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		redirection(t_link *new, char operator, char *cmd);
 void	redirection_error(char *cmd);
 void	check_syntax_red(char *cmd);
 void	check_signs(char *cmd);
-void	add_redirect(t_link *new, char *aux, char operator);
+void	adding_redirect(t_link *new, char *aux, char operator);
 void	handle_output_file(t_link *link);
 void	write_error_red_NL();
 void	write_error_red_1_sign(char *cmd);
