@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/29 17:22:51 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:30:18 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define STDIN 0
 # define SYNTAX_ERROR "syntax error near unexpected token `"
 # define ERROR_HD_NL "syntax error near unexpected token `newline'\n"
+# define IS_DIR ": Is a directory\n"
 
 typedef struct s_link
 {
@@ -57,6 +58,7 @@ typedef struct s_data
 	char	*checked_line;
 	char 	**envp;
 	char 	*buffer;
+	int		exec_pid;
 	t_link	*link;
 } t_data;
 

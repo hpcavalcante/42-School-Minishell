@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/11/30 15:27:15 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:39:33 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ void	if_is_a_directory(char *file)
 {
 	if (file == NULL)
 		return ;
-	if (check_dir(file) == 1 && g_data->error == 0)
+	if (checking_directory(file) == 1 && g_data->error == 0)
 	{
 		ft_putstr_fd(file, STDERR);
-		ft_putstr_fd(": Is a directory\n", STDERR);
-		g_data->error = 1;
+		ft_putstr_fd(IS_DIR, STDERR);
 		g_data->exitcode = 1;
+		g_data->error = 1;
 	}
 }
 
-int	check_dir(char *path)
+int	checking_directory(char *path)
 {
 	struct stat	statbuf;
 
@@ -74,11 +74,8 @@ void	handle_output_file(t_link *link)
 	if (link->file_out != NULL)
 	{
 		if (access(link->file_out, F_OK) == -1)
-		{
-			link->fd_out = open(link->file_out, O_CREAT | \
+			link->fd_out = open(link->file_out, O_CREAT |
 			O_WRONLY | O_APPEND, 0644);
-			printf("criar um aquivo: %s\n", link->file_out);
-		}
 		else if (access(link->file_out, F_OK) == 0 && link->append == 0)
 			link->fd_out = open(link->file_out, O_WRONLY | O_TRUNC);
 		else if (access(link->file_out, F_OK) == 0 && link->append == 1)
@@ -111,7 +108,7 @@ void	add_redirect(t_link *new, char *aux, char operator)
 			close(new->fd_out);
 		}
 		new->file_out = aux;
-		printf("aqui\n");
+		printf("file_out: %s\n", new->file_out);
 		handle_output_file(new);
 	}
 }
