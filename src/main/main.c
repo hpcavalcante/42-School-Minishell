@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/23 17:23:43 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/04 17:08:07 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ t_data *g_data;
 void	kill_loop(int signal)
 {
 	(void) signal;
+	if (g_data->here_doc == 1)
+	{
+		close (STDIN);
+		g_data->error = 1;
+	}
 	if (g_data->pid != 0 && g_data->in_exec == 1)
 	{
 		kill(g_data->pid, SIGKILL);
@@ -30,7 +35,6 @@ void	kill_loop(int signal)
 		rl_redisplay();
 	}
 	g_data->exitcode = 130;
-	//fazer tratamento de arquivo aberto.
 }
 
 int	ft_str_check(const char *s1, const char *s2)
@@ -91,13 +95,6 @@ void	init_shell()
 		dup2(g_data->save_stdin, 0);
 		dup2(g_data->save_stdout, 1);
 		free(g_data->buffer);
-		// while (g_data->link != NULL)
-		// {
-		// 	if (g_data->link->cmd != NULL)
-		// 		command();
-		// 	g_data->link = g_data->link->next;
-		// }
-	//free_list(g_data->link);
 	}
 }
 

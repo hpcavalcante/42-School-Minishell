@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/11/25 14:38:34 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/04 16:49:10 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ char	**find_env(char **path_env)
 	return (matrix);
 }
 
-void	free_matrix(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != NULL)
-		free(s[i++]);
-	free(s);
-}
 
 void	exit_error_path(char **path, t_link *list)
 {

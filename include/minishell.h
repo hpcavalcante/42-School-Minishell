@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/01 18:44:50 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/04 17:13:01 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,13 @@ void	write_error_red_2_signs(char *cmd);
 void	write_error_red_3_signs(char *cmd);
 void	if_is_a_directory(char *file);
 void	pwd_builtin();
+void	exit_builtin();
 void	echo_builtin(char **cmd);
 void	exec_builtin(t_link *link);
 int		check_dir(char *path);
-int	checking_directory(char *path);
+int		checking_directory(char *path);
+void	free_matrix(char **s);
+void	free_all();
 
 extern t_data *g_data;
 #endif
