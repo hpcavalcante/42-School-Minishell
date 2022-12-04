@@ -6,9 +6,10 @@
 #    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/12/04 16:49:44 by hepiment         ###   ########.fr        #
+#    Updated: 2022/12/04 17:42:15 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME = minishell
 
@@ -27,8 +28,10 @@ PATH_OBJS = ./objs/
 
 SRC =	$(PATH_MAIN)main.c\
 		$(PATH_SRC)parse.c\
-		$(PATH_SRC)parse_cond.c\
 		$(PATH_SRC)parse_utils.c\
+		$(PATH_SRC)parse_cond.c\
+		$(PATH_SRC)red_error.c\
+		$(PATH_SRC)output.c\
 		$(PATH_SRC)command.c\
 		$(PATH_SRC)pwd.c\
 		$(PATH_SRC)echo.c\
