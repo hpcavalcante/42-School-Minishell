@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/04 17:08:07 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:46:49 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,30 @@ void	child_process()
 	execve(g_data->link->path, g_data->link->cmd, g_data->envp);
 }
 
+void	chupica()
+{
+	if (g_data->buffer != NULL)
+	{
+		add_history(g_data->buffer);
+		t_link *link;
+		link = (t_link *)malloc(sizeof (t_link));
+		link->next = NULL;
+		g_data->link = link;
+		if (!parse(g_data->link))
+			g_data->error = 1;
+		while (g_data->link != NULL && g_data->error == 0)
+		{
+			process(g_data->link);
+			g_data->link = g_data->link->next;	
+		}
+	}
+	else		
+	{	
+		free_all();
+		write(1, "exit\n", 6);
+		exit (0);
+	}
+}
 void	init_shell()
 {	
 	signal(SIGINT, kill_loop);
@@ -72,26 +96,7 @@ void	init_shell()
 		g_data->in_exec = 0;
 		signal(SIGQUIT, SIG_IGN);
 		g_data->buffer = readline("\e[1;32m[minishell]: \e[0m");
-		if (g_data->buffer != NULL)
-		{
-			add_history(g_data->buffer);
-			t_link *link;
-			link = (t_link *)malloc(sizeof (t_link));
-			link->next = NULL;
-			g_data->link = link;
-			if (!parse(g_data->link))
-				g_data->error = 1;
-			while (g_data->link != NULL && g_data->error == 0)
-			{
-				process(g_data->link);
-				g_data->link = g_data->link->next;	
-			}
-		}
-		else		
-		{	
-			write(1, "exit\n", 6);
-			exit (0);
-		}
+		chupica();
 		dup2(g_data->save_stdin, 0);
 		dup2(g_data->save_stdout, 1);
 		free(g_data->buffer);
@@ -110,6 +115,7 @@ int	main(int argc, char **argv, char **envp)
 	g_data = malloc(sizeof(t_data));
 	g_data->buffer = NULL;
 	g_data->envp = envp;
+	g_data->exitcode = 0;
 	g_data->save_stdin = dup(0);
 	g_data->save_stdout = dup(1);
 	t_link *link;

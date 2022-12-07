@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 14:43:36 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/04 17:12:34 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:17:00 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ int	ft_str_isnum(char *str)
 	return (1);
 }
 
-void	exit_builtin()
+void	exit_builtin(t_link *link)
 {
-	int	status;
-
+	int	status;	
 	write (1, "exit\n", 5);
-	free_all();
 	status = g_data->exitcode;
+	free_all(link);
 	exit(status);
 }

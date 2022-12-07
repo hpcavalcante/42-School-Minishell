@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/04 17:12:21 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:17:03 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	exec_builtin(t_link *link)
 	else if (ft_str_check(link->cmd[0], "pwd"))
 		pwd_builtin();
 	else if (ft_str_check(link->cmd[0], "exit"))
-		exit_builtin();
+		exit_builtin(link);
 	dup2(link->pipe_fd[0], STDIN);
 	dup2(g_data->save_stdout, STDOUT);
 	close(link->pipe_fd[0]);
@@ -70,7 +70,6 @@ void	exec_builtin(t_link *link)
 
 void	process(t_link *link)
 {
-	
 	// close(g_data->fd_pipe[0]);
 	// dup2(g_data->fd_pipe, );
 	g_data->in_exec = 1;
