@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 18:56:46 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/01 19:00:23 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:35:07 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	redirection_error(char *cmd)
 		write_error_red_NL(cmd);
 	else if (cmd[i] == '&' && cmd[i + 1] == '>')
 	{
-		printf("entro aqui");
 		write_error_red_NL(cmd);
 	}
 	else if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|' || cmd[i] == '(' || cmd[i] == ')')

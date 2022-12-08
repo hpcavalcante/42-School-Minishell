@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/01 19:03:15 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:36:12 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	adding_redirect(t_link *new, char *aux, char operator)
 			close(new->fd_in);
 		}
 		new->file_in = aux;
-		//open_file_input(new);
+		handle_input_file(new);
 	}
 	if (operator == '>')
 	{
@@ -87,10 +87,7 @@ int		redirection(t_link *new, char operator, char *buffer)
 		new->append = 1;
 	// else if (buffer[0] == '<' && buffer[1] == '<')
 	// 	new->delimiter = 1;
-	printf("init_buffer: %d\n", init_buffer);
-	printf("i: %d\n", i);
 	aux = ft_substr(buffer, init_buffer, i - init_buffer);
-	printf("substr: %s\n", aux);
 	if_is_a_directory(aux);
 	if (operator == '>')
 		adding_redirect(new, aux, operator);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/07 15:17:03 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:34:58 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,8 +180,7 @@ int		check_syntax(char c)
 {
 	if (c == '&' || c == ';' || c == '\\'\
 		||c == '(' || c == ')' || c == '*')
-		{	
-			printf("foi aqui\n");
+		{
 			syntax_error(c);
 			return (0);
 		}
@@ -221,17 +220,15 @@ int		parse_loop(t_link *new)
 		 	return (0);
 		if (g_data->buffer[i] == '>')
 		{
-			printf("buffer: %s\n", g_data->buffer);
-			i = redirection(new, '>', g_data->buffer + i);
-			return(0);			
+			i += redirection(new, '>', g_data->buffer + i);
+			// return(1);
 		}
 		else if (g_data->buffer[i] == '<')
 		{
-			i = redirection(new, '<', g_data->buffer + i);
-			return (0);
+			i += redirection(new, '<', g_data->buffer + i);
+			// return (0);
 		}
-		// printf("redirect: %d\n", redirection(link));
-		if (g_data->buffer[i] == '|')
+		else if (g_data->buffer[i] == '|')
 			i = parse_pipe(i);
 		else
 			g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i++]);

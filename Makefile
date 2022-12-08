@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/12/04 17:42:15 by hepiment         ###   ########.fr        #
+#    Updated: 2022/12/07 15:58:26 by gissao-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC =	$(PATH_MAIN)main.c\
 		$(PATH_SRC)parse_utils.c\
 		$(PATH_SRC)parse_cond.c\
 		$(PATH_SRC)red_error.c\
+		$(PATH_SRC)input.c\
 		$(PATH_SRC)output.c\
 		$(PATH_SRC)command.c\
 		$(PATH_SRC)pwd.c\
