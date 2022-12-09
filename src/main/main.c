@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/08 20:36:07 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/08 23:21:53 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	child_process()
 	execve(g_data->link->path, g_data->link->cmd, g_data->envp);
 }
 
-void	chupica()
+void	prompt()
 {
 	if (g_data->buffer != NULL)
 	{
@@ -96,7 +96,7 @@ void	init_shell()
 		g_data->in_exec = 0;
 		signal(SIGQUIT, SIG_IGN);
 		g_data->buffer = readline("\e[1;32m[minishell]: \e[0m");
-		chupica();
+		prompt();
 		dup2(g_data->save_stdin, 0);
 		dup2(g_data->save_stdout, 1);
 		free(g_data->buffer);
