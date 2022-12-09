@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/08 21:28:22 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:34:58 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,21 +166,7 @@ int	strchr_count(char *str, int c)
 
 int	check_quotes()
 {
-	char	quotes;
-	int		i;
-
-	i = 0;
-	while (g_data->buffer[i] != '\0')
-	{
-		if (g_data->buffer[i] == '\'' || g_data->buffer[i] == '\"')
-		{
-			quotes = g_data->buffer[i];
-			break ;
-		}
-		i++;
-	}
-	quotes = 1;
-	if (strchr_count(g_data->buffer, quotes) % 2 != 0)
+	if (strchr_count(g_data->buffer, '\'') % 2 != 0 || strchr_count(g_data->buffer, '\"') % 2 != 0)
 	{	
 		write(STDERR, "error: unclosed quotes\n", 24);
 		g_data->error = 1;
@@ -233,16 +219,22 @@ int		parse_loop(t_link *new)
 		if (!check_syntax(g_data->buffer[i]))
 		 	return (0);
 		if (g_data->buffer[i] == '>')
+		{
 			i += redirection(new, '>', g_data->buffer + i);
+			// return(1);
+		}
 		else if (g_data->buffer[i] == '<')
+		{
 			i += redirection(new, '<', g_data->buffer + i);
+			// return (0);
+		}
 		else if (g_data->buffer[i] == '|')
 			i = parse_pipe(i);
 		else
 			g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i++]);
 	}
 	if (g_data->checked_line != NULL)
-		command(g_data->checked_line);	
+		command(g_data->checked_line);
 	return (1);
 }
 

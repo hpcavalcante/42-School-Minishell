@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/08 21:29:51 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:36:07 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ void	child_process()
 	execve(g_data->link->path, g_data->link->cmd, g_data->envp);
 }
 
-void	prompt()
+void	chupica()
 {
-	t_link	*temp;
-	
 	if (g_data->buffer != NULL)
 	{
 		add_history(g_data->buffer);
@@ -72,13 +70,12 @@ void	prompt()
 		link = (t_link *)malloc(sizeof (t_link));
 		link->next = NULL;
 		g_data->link = link;
-		temp = g_data->link;
 		if (!parse(g_data->link))
 			g_data->error = 1;
-		while (temp != NULL && g_data->error == 0)
+		while (g_data->link != NULL && g_data->error == 0)
 		{
-			process(temp);
-			temp = temp->next;	
+			process(g_data->link);
+			g_data->link = g_data->link->next;	
 		}
 	}
 	else		
@@ -99,11 +96,10 @@ void	init_shell()
 		g_data->in_exec = 0;
 		signal(SIGQUIT, SIG_IGN);
 		g_data->buffer = readline("\e[1;32m[minishell]: \e[0m");
-		prompt();
+		chupica();
 		dup2(g_data->save_stdin, 0);
 		dup2(g_data->save_stdout, 1);
 		free(g_data->buffer);
-		free_link(g_data->link);
 	}
 }
 
