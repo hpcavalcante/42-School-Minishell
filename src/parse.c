@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/08 21:23:18 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:28:22 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,15 +233,9 @@ int		parse_loop(t_link *new)
 		if (!check_syntax(g_data->buffer[i]))
 		 	return (0);
 		if (g_data->buffer[i] == '>')
-		{
 			i += redirection(new, '>', g_data->buffer + i);
-			// return(1);
-		}
 		else if (g_data->buffer[i] == '<')
-		{
 			i += redirection(new, '<', g_data->buffer + i);
-			// return (0);
-		}
 		else if (g_data->buffer[i] == '|')
 			i = parse_pipe(i);
 		else
