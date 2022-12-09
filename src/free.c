@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:45:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/07 15:18:59 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:21:55 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	free_matrix(char **s)
 	free(s);
 }
 
-void	free_link(t_link *link)
+void	free_link()
 {	
 	t_link	*temp;
 
-	if (link)
+	if (g_data->link)
 	{
-		while (link)
+		while (g_data->link)
 		{
-			temp = link;
-			link = link->next;
+			temp = g_data->link;
+			g_data->link = g_data->link->next;
 			if (temp->cmd)
 				free_matrix(temp->cmd);
 			if (temp->path)
@@ -41,13 +41,14 @@ void	free_link(t_link *link)
 	}
 }
 
-void	free_all(t_link *link)
+void	free_all()
 {
 	if (g_data->buffer != NULL)
 		free (g_data->buffer);
 	rl_clear_history();
 	close(g_data->save_stdin);
 	close(g_data->save_stdout);
-	free_link(link);
+	free_link();
 	free(g_data);
+	
 }

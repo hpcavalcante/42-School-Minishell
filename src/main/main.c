@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/08 20:36:07 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:26:07 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	child_process()
 
 void	chupica()
 {
+	t_link	*temp;
+	
 	if (g_data->buffer != NULL)
 	{
 		add_history(g_data->buffer);
@@ -70,12 +72,13 @@ void	chupica()
 		link = (t_link *)malloc(sizeof (t_link));
 		link->next = NULL;
 		g_data->link = link;
+		temp = g_data->link;
 		if (!parse(g_data->link))
 			g_data->error = 1;
-		while (g_data->link != NULL && g_data->error == 0)
+		while (temp != NULL && g_data->error == 0)
 		{
-			process(g_data->link);
-			g_data->link = g_data->link->next;	
+			process(temp);
+			temp = temp->next;	
 		}
 	}
 	else		
@@ -100,6 +103,7 @@ void	init_shell()
 		dup2(g_data->save_stdin, 0);
 		dup2(g_data->save_stdout, 1);
 		free(g_data->buffer);
+		free_link(g_data->link);
 	}
 }
 
