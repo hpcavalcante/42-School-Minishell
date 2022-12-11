@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/12/07 15:58:26 by gissao-m         ###   ########.fr        #
+#    Updated: 2022/12/11 20:14:08 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,10 @@ SRC =	$(PATH_MAIN)main.c\
 		$(PATH_SRC)echo.c\
 		$(PATH_SRC)exit.c\
 		$(PATH_SRC)free.c\
+		$(PATH_SRC)path.c\
+		$(PATH_SRC)linked_list.c\
+		$(PATH_SRC)process.c\
+		$(PATH_SRC)error.c\
 
 OBJS = $(patsubst $(PATH_SRC)%.c, $(PATH_OBJS)%.o, $(SRC))
 

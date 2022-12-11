@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/07 15:54:33 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/11 20:16:38 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,15 @@ int		checking_directory(char *path);
 void	free_matrix(char **s);
 void	free_all();
 void	handle_input_file(t_link *link);
+int		check_syntax(char c);
+int		parse_pipe(int i);
+int		parse_quotes(int i);
+int		check_quotes();
+int		strchr_count(char *str, int c);
+void	syntax_error(char c);
+void	child_process();
+void	parent_process(t_link *link);
+int		check_built_in(t_link *link);
 
 extern t_data *g_data;
 #endif

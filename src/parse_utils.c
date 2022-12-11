@@ -6,132 +6,115 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/04 16:49:10 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/11 20:21:15 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**find_env(char **path_env)
+int	parse_pipe(int i)
 {
-	int		count;
-	char	**matrix;
-	char	*row;
+	t_link	*temp;
+	t_link	*new;
 
-	count = 0;
-	while (ft_strncmp(path_env[count], "PATH=", 5))
-		count++;
-	row = path_env[count] + 5;
-	matrix = ft_split(row, ':');
-	return (matrix);
-}
-
-
-void	exit_error_path(char **path, t_link *list)
-{
-	if (path != NULL)
-		free_matrix(path);
-	write (STDERR, list->cmd[0], ft_strlen(list->cmd[0]));
-	write (STDERR, ": command not found\n", 20);
-	close (list->pipe_fd[1]);
-	//free_all();
-	exit (127);
-}
-
-char	*get_path(t_link *link, char **path_env)
-{
-	int		count;
-	char	*path;
-	char	**matrix;
-	char	*temp;
-
-	matrix = find_env(path_env);
-	count = 0;
-	while (matrix[count] != 0)
+	new = (t_link *) malloc (sizeof(t_link));
+	init_linked_list(new);
+	temp = g_data->link;
+	if (g_data->buffer[0] == '|')
 	{
-		if (access(link->cmd[0], F_OK | X_OK) == 0)
-			return(link->cmd[0]);
-		temp = ft_strjoin(matrix[count], "/");
-		path = ft_strjoin(temp, link->cmd[0]);
-		free (temp);
-		if (access(path, F_OK | X_OK) == 0)
+		syntax_error('|');
+		i = ft_strlen(g_data->buffer);
+		return(i);
+	}
+	while (temp->next != NULL)
+		temp = temp->next;
+	new->cmd = ft_split(g_data->checked_line, ' ');
+	linked_list(temp, new);
+	new = (t_link *) malloc (sizeof(t_link));
+	init_linked_list(new);
+	g_data->checked_line = NULL;
+	i++;
+	return (i);
+}
+
+int		check_syntax(char c)
+{
+	if (c == '&' || c == ';' || c == '\\'\
+		||c == '(' || c == ')' || c == '*')
 		{
-			free_matrix(matrix);
-			return (path);
+			syntax_error(c);
+			return (0);
 		}
-		free (path);
-		count++;
-	}
-	exit_error_path(matrix, link);
-	exit (130);
+	return (1);
 }
 
-int	count_find(char *str_cmd)
+int	parse_quotes(int i)
 {
-	int		count;
-	int		find;
+	char	quote;
 
-	count = 0;
-	find = 0;
-	while (str_cmd[count] == ' ')
-		count++;
-	while (count < ft_strlen(str_cmd))
+	quote = g_data->buffer[i];
+	i++;
+	while (g_data->buffer[i] != quote)
 	{
-		if (str_cmd[count] == '\'')
-			find++;
-		count++;
+		g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i]);
+		if (g_data->buffer[i] == ' ')
+			g_data->checked_line = char_join(g_data->checked_line, 1);
+		i++;
 	}
-	return (find);
+	if (g_data->buffer[i] == quote)
+		i++;
+	return (i);
 }
 
-char	**matrix_cmd(char *cmd)
+int	check_quotes()
 {
-	char	**matrix;
-	int		x;
-	int		y;
+	char	quote;
+	int		i;
 
-	x = 0;
-	y = 0;
-	matrix = ft_split(cmd, ' ');
-	while (matrix[y] != NULL)
+	i = 0;
+	while (g_data->buffer[i])
 	{
-		x = 0;
-		while (matrix[y][x] && matrix[y][x] != '\'')
-			x++;
-		if (matrix[y][x] && matrix[y][x + 1])
-			x++;
-		while (matrix[y][x] && matrix[y][x] != '\'')
+		if (g_data->buffer[i] == '\'' || g_data->buffer[i] == '\"')
 		{
-			if (matrix[y][x] == 1)
-				matrix[y][x] = ' ';
-			x++;
+			quote = g_data->buffer[i];
+			break ;
 		}
-		y++;
+		i++;
 	}
-	return (matrix);
+	if (strchr_count(g_data->buffer, quote) % 2 != 0)
+	{	
+		write(STDERR, "error: unclosed quotes\n", 24);
+		g_data->error = 1;
+		g_data->exitcode = 1;
+		return (0);
+	}
+	return (1);
 }
 
-char	**get_cmd(char *cmd)
+char	*char_join(char *str1, char c)
 {
-	char	**matrix;
-	int		count;
+	int		i;
+	char	*str2;
 
-	count = 0;
-	if (count_find(cmd) % 2 != 0)
-		write(2, "Error:", 7);
+	i = -1;
+	if (c == '\0')
+		return (str1);
+	if (str1 == NULL)
+	{
+		str2 = malloc (2 * sizeof(char));
+		str2[0] = c;
+		str2[1] = '\0';
+	}
 	else
 	{
-		while (cmd[count] && cmd[count] != '\'')
-			count++;
-		if (cmd[count] == '\'' && cmd[count + 1])
-			count++;
-		while (cmd[count] && cmd[count] != '\'')
-		{
-			if (cmd[count] == ' ')
-				cmd[count] = 1;
-			count++;
-		}
+		str2 = malloc ((ft_strlen(str1) + 2) * sizeof(char));
+		if (str2 == NULL)
+			return (NULL);
+		while (str1[++i] != '\0')
+			str2[i] = str1[i];
+		str2[i++] = c;
+		str2[i] = '\0';
 	}
-	matrix = matrix_cmd(cmd);
-	return (matrix);
+	free (str1);
+	return (str2);
 }
