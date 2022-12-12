@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/11 20:13:26 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 14:59:33 by hepiment         ###   ########.fr       */
+/*   Created: 2022/12/12 13:23:09 by hepiment          #+#    #+#             */
+/*   Updated: 2022/12/12 13:24:09 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	syntax_error(char c)
+void	export_builtin(char **cmd)
 {
-	ft_putstr_fd(SYNTAX_ERROR, STDERR);
-	ft_putchar_fd(c, STDERR);
-	write(STDERR,"'\n", 3);
-	g_data->exitcode = STDERR;
-	g_data->error = STDOUT;
-}
+	int	i;
 
-void	dir_error(char **cmd)
-{
-	g_data->exitcode = 1;
-	write(STDERR, "cd: ", 4);
-	write(STDERR, cmd[1], ft_strlen(cmd[1]));
-	if (access(cmd[1], F_OK) == 0)
-		write(STDERR, ": Not a directory\n", 18);
-	else
-		write(STDERR, ": No such file or directory\n", 28);
+	i = 0;
+	g_data->exitcode = 0;
+	if (cmd[1] == NULL)
+	{
+		export_list();
+		return ;
+	}
+	while (cmd[++i] != NULL)
+	{
+		if (check_export_var(cmd[i]))
+			do_export(cmd[i]);
+		else
+		{
+			ft_putstr_fd("export: `", STDERR);
+			ft_putstr_fd(cmd[i], STDERR);
+			ft_putstr_fd("\': not a valid identifier\n", STDERR);
+			g_data->exitcode = 1;
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 20:50:33 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:03:43 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_data
 
 
 char	*get_path(t_link *link, char **path_env);
-char	**find_env(char **path_env);
+char	**find_path_env(char **path_env);
 int		count_find(char *str_cmd);
 char	**matrix_cmd(char *cmd);
 char	**get_cmd(char *cmd);
@@ -109,6 +109,11 @@ void	child_process();
 void	parent_process(t_link *link);
 int		check_built_in(t_link *link);
 void	free_list(t_link *link);
+char	**fill_env(char **env);
+void	env_builtin(char **cmd);
+char	*find_env(char *var);
+void	dir_error(char **cmd);
+void	cd_builtin(char **cmd);
 
 extern t_data *g_data;
 #endif

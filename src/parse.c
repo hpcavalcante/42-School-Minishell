@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 20:44:58 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 00:18:41 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int		parse_loop(t_link *new)
 		else
 			g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i++]);
 	}
-	if (g_data->checked_line != NULL)
-		command(g_data->checked_line);
+	// if (g_data->checked_line != NULL)
+	// 	command(g_data->checked_line);
 	return (1);
 }
 
@@ -112,6 +112,10 @@ int	parse(t_link *link)
 		return (0);
 	if (!parse_loop(new))
 		return (0);
+	if (g_data->checked_line != NULL)
+		new->cmd = space_split(g_data->checked_line);
+	free(g_data->checked_line);
+	linked_list(link, new);
 	if (g_data->link->cmd == NULL)
 		g_data->error = 1;
 	return (1);

@@ -6,7 +6,7 @@
 #    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/12/11 20:14:08 by hepiment         ###   ########.fr        #
+#    Updated: 2022/12/12 15:04:01 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SRC =	$(PATH_MAIN)main.c\
 		$(PATH_SRC)linked_list.c\
 		$(PATH_SRC)process.c\
 		$(PATH_SRC)error.c\
+		$(PATH_SRC)env.c\
+		$(PATH_SRC)cd.c\
 
 OBJS = $(patsubst $(PATH_SRC)%.c, $(PATH_OBJS)%.o, $(SRC))
 

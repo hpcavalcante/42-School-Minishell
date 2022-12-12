@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 20:53:49 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 00:49:14 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	prompt()
 		t_link *link;
 		link = (t_link *)malloc(sizeof (t_link));
 		link->next = NULL;
+		init_linked_list(link);
 		g_data->link = link;
 		if (!parse(g_data->link))
 			g_data->error = 1;
@@ -105,7 +106,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	g_data = malloc(sizeof(t_data));
 	g_data->buffer = NULL;
-	g_data->envp = envp;
+	g_data->envp = fill_env(envp);
 	g_data->exitcode = 0;
 	g_data->save_stdin = dup(0);
 	g_data->save_stdout = dup(1);

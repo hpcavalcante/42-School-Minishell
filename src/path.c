@@ -6,13 +6,13 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:07:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 20:08:16 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:03:02 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**find_env(char **path_env)
+char	**find_path_env(char **path_env)
 {
 	int		count;
 	char	**matrix;
@@ -45,7 +45,7 @@ char	*get_path(t_link *link, char **path_env)
 	char	**matrix;
 	char	*temp;
 
-	matrix = find_env(path_env);
+	matrix = find_path_env(path_env);
 	count = 0;
 	while (matrix[count] != 0)
 	{
