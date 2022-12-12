@@ -6,13 +6,13 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:55:09 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 15:07:30 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:08:54 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	ch_pwd()
+static void	change_pwd()
 {
 	char	*buf;
 	char	*old_pwd;
@@ -23,8 +23,8 @@ static void	ch_pwd()
 	buf = malloc (1024);
 	old_pwd = ft_strjoin(ft_strdup("OLDPWD="), find_env("PWD"));
 	cwd = ft_strjoin(ft_strdup("PWD="), getcwd(buf, 1024));
-	// do_export(cwd);
-	// do_export(old_pwd);
+	do_export(cwd);
+	do_export(old_pwd);
 	free (cwd);
 	free (old_pwd);
 	free (buf);
@@ -50,7 +50,7 @@ void	cd_builtin(char **cmd)
 		if (find_env("HOME") == NULL)
 			return ;
 		chdir(find_env("HOME"));
-		ch_pwd();
+		change_pwd();
 	}
 	else if (cmd[2] != NULL)
 	{
@@ -65,6 +65,6 @@ void	cd_builtin(char **cmd)
 			chdir(cmd[1]);
 		else
 			dir_error(cmd);
-		ch_pwd();
+		change_pwd();
 	}
 }

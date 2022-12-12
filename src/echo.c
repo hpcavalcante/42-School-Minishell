@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 18:26:17 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/01 19:14:21 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:55:00 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	echo_builtin(char **cmd)
 		write (1, "\n", 1);
 	else
 	{
-		if (ft_str_check(cmd[1], "-n"))
+		if (ft_str_check(cmd[1], "-n") || ft_str_check(cmd[1], "-e"))
 			i++;
 		while (cmd[i] != NULL)
 		{

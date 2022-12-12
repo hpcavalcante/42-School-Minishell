@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 16:44:17 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:06:42 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	env_remove(char	*var);
 void	export_builtin(char **cmd);
 char	**get_sorted_env();
 void	unset_builtin(char **cmd);
+void	do_export(char	*str);
 
 extern t_data *g_data;
 #endif
