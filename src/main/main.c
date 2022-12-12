@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 00:49:14 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:20:00 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	prompt()
 			process(g_data->link);
 			g_data->link = g_data->link->next;	
 		}
-		free_list(g_data->link);
 	}
 	else		
 	{	
