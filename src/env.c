@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 15:53:17 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 13:56:30 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:37:33 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,63 @@ char	*find_env(char *var)
 		i++;
 	}
 	return (NULL);
+}
+
+char	**get_sorted_env()
+{
+	int		env_size;
+	char	**env;
+	int		i;
+	char	*temp;
+
+	env = fill_env(g_data->envp);
+	env_size = 0;
+	while (env[env_size] != NULL)
+		env_size++;
+	while (env_size > 0)
+	{
+		i = 0;
+		while (i < env_size - 1)
+		{
+			if (ft_strncmp(env[i], env[i + 1], ft_strlen(env[i])) > 0)
+			{
+				temp = env[i];
+				env[i] = env[i + 1];
+				env[i + 1] = temp;
+			}
+			i++;
+		}
+		env_size--;
+	}
+	return (env);
+}
+
+void	env_remove(char	*var)
+{
+	int		i;
+	int		n;
+	char	**str;
+	int		size;
+
+	i = -1;
+	n = -1;
+	str = NULL;
+	size = 0;
+	if (find_env(var) == NULL)
+		return ;
+	while (g_data->envp[size] != NULL)
+		size++;
+	str = (char **) malloc (sizeof(char *) * size);
+	while (g_data->envp[++i] != NULL)
+	{
+		if (!(ft_strncmp(var, g_data->envp[i], ft_strlen(var)) == 0 \
+			&& (g_data->envp[i][ft_strlen(var)] == '=' \
+			|| g_data->envp[i][ft_strlen(var)] == '\0')))
+			str[++n] = ft_strdup(g_data->envp[i]);
+	}
+	str[n + 1] = NULL;
+	free_matrix(g_data->envp);
+	g_data->envp = str;
 }
 
 char	**fill_env(char **env)

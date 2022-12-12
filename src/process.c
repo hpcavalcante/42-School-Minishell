@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:11:58 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 15:03:26 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:44:08 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ void	exec_builtin(t_link *link)
 		exit_builtin(link);
 	else if (ft_str_check(link->cmd[0], "env"))
 		env_builtin(link->cmd);
-	// else if (ft_str_check(link->cmd[0], "export"))
-	// 	export_builtin(link->cmd);
+	else if (ft_str_check(link->cmd[0], "export"))
+		export_builtin(link->cmd);
 	else if (ft_str_check(link->cmd[0], "cd"))
 		cd_builtin(link->cmd);
+	else if (ft_str_check(link->cmd[0], "unset"))
+		unset_builtin(link->cmd);
 	dup2(link->pipe_fd[0], STDIN);
 	dup2(g_data->save_stdout, STDOUT);
 	close(link->pipe_fd[0]);
