@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:45:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/08 23:20:15 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/11 20:51:35 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,24 @@ void	free_matrix(char **s)
 	free(s);
 }
 
-void	free_link()
-{	
+void	free_list(t_link *link)
+{
 	t_link	*temp;
 
-	if (g_data->link)
+	while (link != NULL)
 	{
-		while (g_data->link)
-		{
-			temp = g_data->link;
-			g_data->link = g_data->link->next;
-			if (temp->cmd)
-				free_matrix(temp->cmd);
-			if (temp->path)
-				free(temp->path);
-			free(temp);
-		}
+		temp = link->next;
+		free(link->file_in);
+		free(link->file_out);
+		if (link->fd_in != 0)
+			close (link->fd_in);
+		if (link->fd_out != 0)
+			close (link->fd_out);
+		if (link->cmd != NULL)
+			free_matrix(link->cmd);
+		free(link->path);
+		free (link);
+		link = temp;
 	}
 }
 
@@ -48,6 +50,6 @@ void	free_all()
 	rl_clear_history();
 	close(g_data->save_stdin);
 	close(g_data->save_stdout);
-	free_link(link);
+	//free_list(link);
 	free(g_data);
 }

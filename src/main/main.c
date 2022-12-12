@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 20:12:48 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/11 20:53:49 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int	ft_str_check(const char *s1, const char *s2)
 		return (0);
 }
 
-
-
 void	prompt()
 {
 	if (g_data->buffer != NULL)
@@ -70,6 +68,7 @@ void	prompt()
 			process(g_data->link);
 			g_data->link = g_data->link->next;	
 		}
+		free_list(g_data->link);
 	}
 	else		
 	{	

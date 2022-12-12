@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 20:16:38 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/11 20:50:33 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	syntax_error(char c);
 void	child_process();
 void	parent_process(t_link *link);
 int		check_built_in(t_link *link);
+void	free_list(t_link *link);
 
 extern t_data *g_data;
 #endif

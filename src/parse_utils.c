@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 20:21:15 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/11 20:43:34 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	check_quotes()
 	int		i;
 
 	i = 0;
+	quote = 1;
 	while (g_data->buffer[i])
 	{
 		if (g_data->buffer[i] == '\'' || g_data->buffer[i] == '\"')
@@ -81,7 +82,7 @@ int	check_quotes()
 		}
 		i++;
 	}
-	if (strchr_count(g_data->buffer, quote) % 2 != 0)
+	if (strchr_count(g_data->buffer, quote) % 2 != 0 && strchr_count(g_data->buffer, quote) > 0)
 	{	
 		write(STDERR, "error: unclosed quotes\n", 24);
 		g_data->error = 1;
