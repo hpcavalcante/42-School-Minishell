@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/12/13 07:41:57 by hepiment         ###   ########.fr        #
+#    Updated: 2022/12/13 14:57:21 by gissao-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC =	$(PATH_MAIN)main.c\
 		$(PATH_SRC)exit.c\
 		$(PATH_SRC)free.c\
 		$(PATH_SRC)path.c\
+		$(PATH_SRC)count_find.c\
 		$(PATH_SRC)linked_list.c\
 		$(PATH_SRC)process.c\
 		$(PATH_SRC)error.c\

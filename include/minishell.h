@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 12:07:05 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:07:11 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	check_signs(char *cmd);
 void	adding_redirect(t_link *new, char *aux, char operator);
 void	handle_output_file(t_link *link);
 void	handle_here_doc(t_link *link);
-void	write_error_red_NL();
+void	write_error_red_nl( );
 void	write_error_red_1_sign(char *cmd);
 void	write_error_red_2_signs(char *cmd);
 void	write_error_red_3_signs(char *cmd);

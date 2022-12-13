@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:07:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 09:33:53 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:58:40 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,6 @@ char	*get_path(t_link *link, char **path_env)
 	}
 	exit_error_path(matrix, link);
 	exit (127);
-}
-
-int	count_find(char *str_cmd)
-{
-	int		count;
-	int		find;
-
-	count = 0;
-	find = 0;
-	while (str_cmd[count] == ' ')
-		count++;
-	while (count < ft_strlen(str_cmd))
-	{
-		if (str_cmd[count] == '\'')
-			find++;
-		count++;
-	}
-	return (find);
 }
 
 char	**matrix_cmd(char *cmd)

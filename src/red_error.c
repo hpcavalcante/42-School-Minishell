@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 18:56:46 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 13:46:04 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:12:23 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	write_error_red_1_sign(char *cmd)
 	g_data->exitcode = 2;
 }
 
-void	write_error_red_NL()
+void	write_error_red_nl()
 {
 	write (STDERR, ERROR_HD_NL, 46);
 	g_data->error = 1;
@@ -61,28 +61,16 @@ void	redirection_error(char *cmd)
 	else if (cmd[i + 3] == '<')
 		write_error_red_1_sign(cmd);
 	else if (cmd[i + 3] == '>')
-	{
 		write_error_red_2_signs(cmd);
-		printf("gsilva\n");
-
-	}
 	else if (cmd[i + 2] == '>')
-	{
 		write_error_red_1_sign(cmd);
-		printf("sera\n");
-	}
 	else if ((cmd[i] == '>' || cmd[i + 1] == '>') || (cmd[i + 2] == '<'))
-	{
-		write_error_red_NL(cmd);
-		printf("aqui\n");
-	}
-	// else if ((cmd[i] == '<' || cmd[i + 1] == '<') && cmd[i + 2] == '\0')
-	// 	write_error_red_NL(cmd);
+		write_error_red_nl();
+	else if (cmd[i] == '<' || cmd[i + 1] == '<')
+		write_error_red_nl();
 	else if (cmd[i] == '&' && cmd[i + 1] == '>')
-	{
-		write_error_red_NL(cmd);
-		printf("neste\n");
-	}
-	else if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|' || cmd[i] == '(' || cmd[i] == ')')
+		write_error_red_nl();
+	else if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|'\
+	|| cmd[i] == '(' || cmd[i] == ')')
 		write_error_red_1_sign(cmd);
 }
