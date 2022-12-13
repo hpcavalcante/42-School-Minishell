@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:07:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 15:03:02 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:48:59 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	**find_path_env(char **path_env)
 	return (matrix);
 }
 
-
 void	exit_error_path(char **path, t_link *list)
 {
 	if (path != NULL)
@@ -34,7 +33,7 @@ void	exit_error_path(char **path, t_link *list)
 	write (STDERR, list->cmd[0], ft_strlen(list->cmd[0]));
 	write (STDERR, ": command not found\n", 20);
 	close (list->pipe_fd[1]);
-	//free_all();
+	free_all();
 	exit (127);
 }
 
@@ -50,7 +49,7 @@ char	*get_path(t_link *link, char **path_env)
 	while (matrix[count] != 0)
 	{
 		if (access(link->cmd[0], F_OK | X_OK) == 0)
-			return(link->cmd[0]);
+			return (link->cmd[0]);
 		temp = ft_strjoin(matrix[count], "/");
 		path = ft_strjoin(temp, link->cmd[0]);
 		free (temp);

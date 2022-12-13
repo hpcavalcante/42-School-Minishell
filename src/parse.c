@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 07:08:55 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 08:51:14 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,13 @@ int		parse_loop(t_link **new)
 			i += redirection(*new, '>', g_data->buffer + i);
 		else if (g_data->buffer[i] == '<')
 			i += redirection(*new, '<', g_data->buffer + i);
+		else if (g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) || g_data->buffer[i + 1] == '?'))
+			i += parse_variable(i);
 		else if (g_data->buffer[i] == '|')
 			i = parse_pipe(i);
 		else
 			g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i++]);
 	}
-	// if (g_data->checked_line != NULL)
-	// 	command(g_data->checked_line);
 	return (1);
 }
 

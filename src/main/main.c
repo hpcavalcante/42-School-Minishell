@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 07:18:44 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:50:44 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,3 @@ int	main(int argc, char **argv, char **envp)
 	g_data->link = link;
 	init_shell();
 }
-
-//fazer  splits de acordo com o numero de pipes + 1, por isso ele usa lista encadeada porque em cada no vai ter uma variavel.

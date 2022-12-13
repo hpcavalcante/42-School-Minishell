@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cond.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/08 20:36:12 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 09:20:28 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,29 @@ int		redirection(t_link *new, char operator, char *buffer)
 	if_is_a_directory(aux);
 	if (operator == '>')
 		adding_redirect(new, aux, operator);
+	return (i);
+}
+
+int	parse_variable(int i)
+{
+	// int		j;
+	char	*var;
+
+	if (g_data->buffer[i + 1] == '?')
+	{
+		var = ft_itoa(g_data->exitcode);
+		g_data->checked_line = ft_strjoin(g_data->checked_line, var);
+		free (var);
+		return (2);
+	}
+	if (ft_isdigit(g_data->buffer[i + 1]))
+		return (2);
+	var = ft_substr(g_data->buffer, i + 1, ft_strlen(g_data->buffer));
+	if (var != NULL)
+	{
+		if (find_env(var) != NULL && find_env(var)[0] != '\0')
+			g_data->checked_line = ft_strjoin(g_data->checked_line, find_env(var));
+		free (var);
+	}
 	return (i);
 }

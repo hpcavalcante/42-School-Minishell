@@ -6,7 +6,7 @@
 #    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/12/12 16:44:28 by hepiment         ###   ########.fr        #
+#    Updated: 2022/12/13 07:41:57 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,6 @@ SRC =	$(PATH_MAIN)main.c\
 		$(PATH_SRC)red_error.c\
 		$(PATH_SRC)input.c\
 		$(PATH_SRC)output.c\
-		$(PATH_SRC)command.c\
 		$(PATH_SRC)pwd.c\
 		$(PATH_SRC)echo.c\
 		$(PATH_SRC)exit.c\

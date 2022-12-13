@@ -6,13 +6,13 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:55:09 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 17:08:54 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:26:21 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	change_pwd()
+static void	change_pwd(void)
 {
 	char	*buf;
 	char	*old_pwd;
@@ -30,7 +30,7 @@ static void	change_pwd()
 	free (buf);
 }
 
-void cd_oldpwd()
+void	cd_oldpwd(void)
 {
 	if (find_env("OLDPWD") == NULL)
 	{
@@ -55,7 +55,7 @@ void	cd_builtin(char **cmd)
 	else if (cmd[2] != NULL)
 	{
 		g_data->exitcode = 1;
-		write(STDERR, "cd: too many arguments\n", 23); 
+		write(STDERR, "cd: too many arguments\n", 23);
 	}
 	else
 	{

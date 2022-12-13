@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:11:58 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 16:44:08 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 09:05:22 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_builtin(t_link *link)
 	else if (ft_str_check(link->cmd[0], "pwd"))
 		pwd_builtin();
 	else if (ft_str_check(link->cmd[0], "exit"))
-		exit_builtin(link);
+		exit_builtin(link->cmd);
 	else if (ft_str_check(link->cmd[0], "env"))
 		env_builtin(link->cmd);
 	else if (ft_str_check(link->cmd[0], "export"))
@@ -38,8 +38,6 @@ void	exec_builtin(t_link *link)
 
 void	process(t_link *link)
 {
-	// close(g_data->fd_pipe[0]);
-	// dup2(g_data->fd_pipe, );
 	g_data->in_exec = 1;
 	if (pipe(link->pipe_fd) == -1)
 		exit (-1);
@@ -57,7 +55,7 @@ void	process(t_link *link)
 	}
 }
 
-void	child_process()
+void	child_process(void)
 {
 	close(g_data->link->pipe_fd[0]);
 	if (g_data->link->next != NULL)

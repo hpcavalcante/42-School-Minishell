@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:13:26 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 14:59:33 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 09:10:39 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	syntax_error(char c)
 {
 	ft_putstr_fd(SYNTAX_ERROR, STDERR);
 	ft_putchar_fd(c, STDERR);
-	write(STDERR,"'\n", 3);
-	g_data->exitcode = STDERR;
-	g_data->error = STDOUT;
+	write(STDERR, "'\n", 3);
+	g_data->exitcode = 2;
+	g_data->error = 1;
 }
 
 void	dir_error(char **cmd)
