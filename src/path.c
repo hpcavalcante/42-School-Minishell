@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:07:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 14:58:40 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:46:18 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ char	**find_path_env(char **path_env)
 	count = 0;
 	while (ft_strncmp(path_env[count], "PATH=", 5))
 		count++;
+	if (count == 0 && (ft_strncmp(path_env[count], "PATH=", 5) == 0))
+		return (NULL);
 	row = path_env[count] + 5;
 	matrix = ft_split(row, ':');
 	return (matrix);
 }
 
-void	exit_error_path(char **path, t_link *list)
+char	*exit_error_path(char **path, t_link *list)
 {
 	if (path != NULL)
 		free_matrix(path);
@@ -34,6 +36,8 @@ void	exit_error_path(char **path, t_link *list)
 	write (STDERR, ": command not found\n", 20);
 	close (list->pipe_fd[1]);
 	free_all();
+	exit(127);
+	return (NULL);
 }
 
 char	*get_path(t_link *link, char **path_env)
@@ -43,9 +47,11 @@ char	*get_path(t_link *link, char **path_env)
 	char	**matrix;
 	char	*temp;
 
+	if (find_env("PATH") == NULL)
+		exit_error_path(NULL, link);
 	matrix = find_path_env(path_env);
-	count = 0;
-	while (matrix[count] != 0)
+	count = -1;
+	while (matrix[++count] != NULL)
 	{
 		if (access(link->cmd[0], F_OK | X_OK) == 0)
 			return (link->cmd[0]);
@@ -58,10 +64,8 @@ char	*get_path(t_link *link, char **path_env)
 			return (path);
 		}
 		free (path);
-		count++;
 	}
-	exit_error_path(matrix, link);
-	exit (127);
+	return (exit_error_path(matrix, link));
 }
 
 char	**matrix_cmd(char *cmd)
