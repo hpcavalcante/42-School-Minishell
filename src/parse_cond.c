@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 17:13:46 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:08:49 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,26 @@ int		redirection(t_link *new, char operator, char *buffer)
 int	parse_variable(int i)
 {
 	char	*var;
+	int		temp;
 
 	if (g_data->buffer[i + 1] == '?')
 	{
 		var = ft_itoa(g_data->exitcode);
-		g_data->checked_line = ft_strjoin(g_data->checked_line, var);
+		g_data->checked_line = ft_my_strjoin(g_data->checked_line, var);
 		free (var);
 		return (2);
 	}
 	if (ft_isdigit(g_data->buffer[i + 1]))
 		return (2);
-	var = ft_substr(g_data->buffer, i + 1, ft_strlen(g_data->buffer));
+	i++;
+	temp = i;
+	while (ft_isalnum(g_data->buffer[i]))
+		i++;
+	var = ft_substr(g_data->buffer, temp, i - temp);
 	if (var != NULL)
 	{
 		if (find_env(var) != NULL && find_env(var)[0] != '\0')
-			g_data->checked_line = ft_strjoin(g_data->checked_line, find_env(var));
+			g_data->checked_line = ft_my_strjoin(g_data->checked_line, find_env(var));
 		free (var);
 	}
 	return (i);

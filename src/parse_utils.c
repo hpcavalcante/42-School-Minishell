@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 18:22:27 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:03:00 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,18 @@ int	parse_quotes(int i)
 
 	quote = g_data->buffer[i];
 	i++;
-	// if (quote == '\"' && g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) || g_data->buffer[i + 1] == '?'))
-	// {
-	// 	remove_quotes(i);
-	// 	return (ft_strlen(g_data->buffer));
-	// }
 	while (g_data->buffer[i] && g_data->buffer[i] != quote)
 	{
-		g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i]);
-		if (g_data->buffer[i] == ' ')
-			g_data->checked_line = char_join(g_data->checked_line, 1);
-		i++;
+		if (quote == '\"' && g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) || \
+		g_data->buffer[i + 1] == '?'))
+			i = parse_variable(i);
+		else
+		{
+			g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i]);
+			if (g_data->buffer[i] == ' ')
+				g_data->checked_line = char_join(g_data->checked_line, 1);
+			i++;
+		}
 	}
 	if (g_data->buffer[i] == quote)
 		i++;

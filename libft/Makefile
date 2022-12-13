@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/27 14:40:41 by gissao-m          #+#    #+#              #
-#    Updated: 2022/10/05 12:38:30 by gissao-m         ###   ########.fr        #
+#    Updated: 2022/12/13 20:20:09 by hepiment         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ SRCS = ./ft_isalpha.c \
 		
 CFLAGS =  -Wall -Wextra -Werror
 
-CC = gcc
+CC = cc
 
 OBJS = ${SRCS:.c=.o}
 
