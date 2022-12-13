@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 20:43:34 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:16:42 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ int	parse_pipe(int i)
 	while (temp->next != NULL)
 		temp = temp->next;
 	new->cmd = ft_split(g_data->checked_line, ' ');
+	free(g_data->checked_line);
 	linked_list(temp, new);
-	new = (t_link *) malloc (sizeof(t_link));
-	init_linked_list(new);
+	// new = (t_link *) malloc (sizeof(t_link));
+	// init_linked_list(new);
 	g_data->checked_line = NULL;
 	i++;
 	return (i);

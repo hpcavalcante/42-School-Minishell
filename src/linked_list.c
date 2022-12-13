@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:11:01 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 15:45:10 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 06:23:24 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ void	linked_list(t_link *link, t_link *new)
 	if (link->cmd == NULL)
 	{
 		link->append = new->append;
+		link->delimiter = new->delimiter;
+		link->file_in = new->file_in;
 		link->file_out = new->file_out;
-		link->fd_out = new->fd_out;
 		link->cmd = new->cmd;
-		// link->next = new->next;
-		link->path = new->path;
 		link->next = NULL;
-		//o ultimo elemnto da lista linkada precisa ser nulo!!
+		link->fd_in = new->fd_in;
+		link->fd_out = new->fd_out;
+		link->path = new->path;
 		free (new);
 	}
 	else
@@ -37,9 +38,12 @@ void	linked_list(t_link *link, t_link *new)
 void	init_linked_list(t_link *new)
 {
 	new->cmd = NULL;
-	new->next = NULL;
-	new->path = NULL;
+	new->file_in = NULL;
 	new->file_out = NULL;
+	new->next = NULL;
+	new->delimiter = 0;
 	new->append = 0;
+	new->fd_in = 0;
 	new->fd_out = 0;
+	new->path = NULL;
 }

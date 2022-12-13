@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:45:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/11 20:51:35 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 05:55:05 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ void	free_list(t_link *link)
 
 void	free_all()
 {
+	if (g_data->link != NULL)
+		free_list(g_data->link);
 	if (g_data->buffer != NULL)
 		free (g_data->buffer);
+	free_matrix(g_data->envp);
 	rl_clear_history();
 	close(g_data->save_stdin);
 	close(g_data->save_stdout);
-	//free_list(link);
-	free(g_data);
+	free (g_data);
 }

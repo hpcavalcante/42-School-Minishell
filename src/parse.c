@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 00:18:41 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:08:55 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	strchr_count(char *str, int c)
 	return (j);
 }
 
-int		parse_loop(t_link *new)
+int		parse_loop(t_link **new)
 {
 	int		i;
 
@@ -87,9 +87,9 @@ int		parse_loop(t_link *new)
 		if (!check_syntax(g_data->buffer[i]))
 		 	return (0);
 		if (g_data->buffer[i] == '>')
-			i += redirection(new, '>', g_data->buffer + i);
+			i += redirection(*new, '>', g_data->buffer + i);
 		else if (g_data->buffer[i] == '<')
-			i += redirection(new, '<', g_data->buffer + i);
+			i += redirection(*new, '<', g_data->buffer + i);
 		else if (g_data->buffer[i] == '|')
 			i = parse_pipe(i);
 		else
@@ -110,7 +110,7 @@ int	parse(t_link *link)
 	link->cmd = NULL;
 	if (!check_quotes())
 		return (0);
-	if (!parse_loop(new))
+	if (!parse_loop(&new))
 		return (0);
 	if (g_data->checked_line != NULL)
 		new->cmd = space_split(g_data->checked_line);

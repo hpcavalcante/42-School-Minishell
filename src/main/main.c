@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 16:20:00 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:18:44 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,28 @@ int	ft_str_check(const char *s1, const char *s2)
 
 void	prompt()
 {
-	if (g_data->buffer != NULL)
+	t_link *link;
+	
+	if (g_data->buffer[0] == '\0')
+		return ;
+	link = (t_link *)malloc(sizeof (t_link));
+	link->next = NULL;
+	add_history(g_data->buffer);
+	init_linked_list(link);
+	g_data->link = link;
+	if (!parse(g_data->link))
+		g_data->error = 1;
+	if (g_data->error == 1)
 	{
-		add_history(g_data->buffer);
-		t_link *link;
-		link = (t_link *)malloc(sizeof (t_link));
-		link->next = NULL;
-		init_linked_list(link);
-		g_data->link = link;
-		if (!parse(g_data->link))
-			g_data->error = 1;
-		while (g_data->link != NULL && g_data->error == 0)
-		{
-			process(g_data->link);
-			g_data->link = g_data->link->next;	
-		}
+		free_list(g_data->link);
+		return ;
 	}
-	else		
-	{	
-		free_all();
-		write(1, "exit\n", 6);
-		exit (0);
+	while (g_data->link != NULL && g_data->error == 0)
+	{
+		process(g_data->link);
+		g_data->link = g_data->link->next;	
 	}
+	free_list(link);
 }
 void	init_shell()
 {	
@@ -88,10 +88,17 @@ void	init_shell()
 		g_data->in_exec = 0;
 		signal(SIGQUIT, SIG_IGN);
 		g_data->buffer = readline("\e[1;32m[minishell]: \e[0m");
-		prompt();
-		dup2(g_data->save_stdin, 0);
-		dup2(g_data->save_stdout, 1);
+		if (g_data->buffer != NULL)
+			prompt();
+		else		
+		{	
+			free_all();
+			write(1, "exit\n", 5);
+			exit (0);
+		}
 		free(g_data->buffer);
+		dup2(g_data->save_stdin, STDIN);
+		dup2(g_data->save_stdout, STDOUT);
 	}
 }
 
