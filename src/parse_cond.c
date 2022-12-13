@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cond.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 10:25:26 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:50:59 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,26 @@ int		redirection(t_link *new, char operator, char *buffer)
 	while (buffer[i] != '<' && buffer[i] != '>' && buffer[i] != ' ' && buffer[i] != '|' \
 	&& buffer[i] != '&' && buffer[i] != ';' && buffer[i] != '\0' && buffer[i] != '(' && buffer[i] != ')')
 		i++;
+	printf("i: %d\n", i);
+	printf("init: %d\n", init_buffer);
 	if (i == init_buffer)
 	{
 		redirection_error(buffer);
+		printf("gol\n");
+		return (-1);
 	}
 	j = 0;
 	if (buffer[j] == '>' && buffer[j + 1] == '>')
 		new->append = 1;
-	// else if (buffer[0] == '<' && buffer[1] == '<')
-	// 	new->delimiter = 1;
+	else if (buffer[j] == '<' && buffer[j + 1] == '<')
+		new->delimiter = 1;
 	aux = ft_substr(buffer, init_buffer, i - init_buffer);
 	if_is_a_directory(aux);
-	if (operator == '>')
+	if (operator == '>' || operator == '<')
+	{
+		printf("chegou\n");
 		adding_redirect(new, aux, operator);
+	}
 	return (i);
 }
 

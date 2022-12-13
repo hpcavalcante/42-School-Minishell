@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 09:37:47 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:48:36 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	init_shell()
 		g_data->buffer = NULL;
 		g_data->link = NULL;
 		g_data->in_exec = 0;
+		g_data->here_doc = 0;
 		g_data->buffer = readline("\e[1;32m[minishell]: \e[0m");
 		if (g_data->buffer != NULL)
 			prompt();

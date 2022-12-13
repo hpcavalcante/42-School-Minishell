@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 10:25:17 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:57:03 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ int	strchr_count(char *str, int c)
 int		parse_loop(t_link **new)
 {
 	int		i;
+	int		j;
 
+	j = 0;
 	i = 0;
 	while (g_data->buffer[i] != '\0')
 	{
@@ -87,9 +89,19 @@ int		parse_loop(t_link **new)
 		if (g_data->buffer[i] == '\'' || g_data->buffer[i] == '\"')
 			i = parse_quotes(i);
 		else if (g_data->buffer[i] == '>')
-			i += redirection(*new, '>', g_data->buffer + i);
+		{
+			j = redirection(*new, '>', g_data->buffer + i);
+			if (j == -1)
+				return (0);
+			i += j;
+		}
 		else if (g_data->buffer[i] == '<')
-			i += redirection(*new, '<', g_data->buffer + i);
+		{
+			j = redirection(*new, '<', g_data->buffer + i);
+			if (j == -1)
+				return (0);
+			i += j;
+		}
 		else if (g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) || g_data->buffer[i + 1] == '?'))
 			i += parse_variable(i);
 		else if (g_data->buffer[i] == '|')

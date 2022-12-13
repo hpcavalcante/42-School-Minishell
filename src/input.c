@@ -6,13 +6,13 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:41:24 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/07 14:25:44 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:15:45 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	open_delimiter(t_link *link)
+void	handle_here_doc(t_link *link)
 {
 	int		fd;
 	char	*line;
@@ -75,10 +75,11 @@ void    handle_input_file(t_link *link)
 		{
 			g_data->here_doc = 1;
 			signal (SIGQUIT, SIG_IGN);
-			open_delimiter(link);
+			handle_here_doc(link);
 			signal (SIGQUIT, quit_core);
 			g_data->here_doc = 0;
 		}
 		dup2 (link->fd_in, STDIN);
+		//aqui estou duplicando e fazendo com que tudo apareca no arquivo de entrada padrao.
 	}
 }

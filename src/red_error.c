@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 18:56:46 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/08 20:35:07 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:46:04 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,27 @@ void	redirection_error(char *cmd)
 	else if (cmd[i + 3] == '<')
 		write_error_red_1_sign(cmd);
 	else if (cmd[i + 3] == '>')
+	{
 		write_error_red_2_signs(cmd);
+		printf("gsilva\n");
+
+	}
 	else if (cmd[i + 2] == '>')
+	{
 		write_error_red_1_sign(cmd);
-	else if ((cmd[i] == '>' || cmd[i + 1] == '>') ||\
-	(cmd[i] == '<' || cmd[i + 1] == '<' || cmd[i + 2] == '<'))
+		printf("sera\n");
+	}
+	else if ((cmd[i] == '>' || cmd[i + 1] == '>') || (cmd[i + 2] == '<'))
+	{
 		write_error_red_NL(cmd);
+		printf("aqui\n");
+	}
+	// else if ((cmd[i] == '<' || cmd[i + 1] == '<') && cmd[i + 2] == '\0')
+	// 	write_error_red_NL(cmd);
 	else if (cmd[i] == '&' && cmd[i + 1] == '>')
 	{
 		write_error_red_NL(cmd);
+		printf("neste\n");
 	}
 	else if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|' || cmd[i] == '(' || cmd[i] == ')')
 		write_error_red_1_sign(cmd);
