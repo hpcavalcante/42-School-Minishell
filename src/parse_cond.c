@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 09:20:28 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:25:26 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int		redirection(t_link *new, char operator, char *buffer)
 
 int	parse_variable(int i)
 {
-	// int		j;
 	char	*var;
 
 	if (g_data->buffer[i + 1] == '?')

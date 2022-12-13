@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 07:16:42 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:22:55 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	parse_pipe(int i)
 	new->cmd = ft_split(g_data->checked_line, ' ');
 	free(g_data->checked_line);
 	linked_list(temp, new);
-	// new = (t_link *) malloc (sizeof(t_link));
-	// init_linked_list(new);
 	g_data->checked_line = NULL;
 	i++;
 	return (i);
@@ -55,6 +53,8 @@ int	parse_quotes(int i)
 
 	quote = g_data->buffer[i];
 	i++;
+	// if (quote == '\"' && g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) || g_data->buffer[i + 1] == '?'))
+	// 	i = parse_variable(i);
 	while (g_data->buffer[i] != quote)
 	{
 		g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i]);

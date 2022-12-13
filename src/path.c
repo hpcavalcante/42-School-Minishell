@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:07:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 07:48:59 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 09:33:53 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	exit_error_path(char **path, t_link *list)
 	write (STDERR, ": command not found\n", 20);
 	close (list->pipe_fd[1]);
 	free_all();
-	exit (127);
 }
 
 char	*get_path(t_link *link, char **path_env)
@@ -62,7 +61,7 @@ char	*get_path(t_link *link, char **path_env)
 		count++;
 	}
 	exit_error_path(matrix, link);
-	exit (130);
+	exit (127);
 }
 
 int	count_find(char *str_cmd)

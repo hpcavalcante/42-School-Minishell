@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 08:51:14 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:25:17 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ int		parse_loop(t_link **new)
 	{
 		while (g_data->buffer[i] == ' ' && g_data->checked_line == NULL)
 			i++;
-		if (g_data->buffer[i] == '\'' || g_data->buffer[i] == '\"')
-			i = parse_quotes(i);
 		if (!check_syntax(g_data->buffer[i]))
 		 	return (0);
-		if (g_data->buffer[i] == '>')
+		if (g_data->buffer[i] == '\'' || g_data->buffer[i] == '\"')
+			i = parse_quotes(i);
+		else if (g_data->buffer[i] == '>')
 			i += redirection(*new, '>', g_data->buffer + i);
 		else if (g_data->buffer[i] == '<')
 			i += redirection(*new, '<', g_data->buffer + i);
