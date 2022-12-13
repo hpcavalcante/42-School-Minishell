@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cond.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 13:50:59 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:13:46 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void	if_is_a_directory(char *file)
 }
 
 void	adding_redirect(t_link *new, char *aux, char operator)
-//tratamento para varios redirects seguidos
-//ex: echo hello > a > b > c, neste caso ele criara os tres arquivos, porem so o c vai ter
-//escrito o hello.
 {
 	dup2(g_data->save_stdin, STDIN);
 	if (operator == '<')
@@ -67,23 +64,18 @@ int		redirection(t_link *new, char operator, char *buffer)
 	char	*aux;
 	int		i;
 	int		init_buffer;
-	//buffer inicial.
 	int		j;
 
 	i = 0;
-	// buffer = g_data->buffer;
 	while (buffer[i] == ' ' || (buffer[i] == operator && i < 2))
 		i++;
 	init_buffer = i;
 	while (buffer[i] != '<' && buffer[i] != '>' && buffer[i] != ' ' && buffer[i] != '|' \
 	&& buffer[i] != '&' && buffer[i] != ';' && buffer[i] != '\0' && buffer[i] != '(' && buffer[i] != ')')
 		i++;
-	printf("i: %d\n", i);
-	printf("init: %d\n", init_buffer);
 	if (i == init_buffer)
 	{
 		redirection_error(buffer);
-		printf("gol\n");
 		return (-1);
 	}
 	j = 0;
@@ -94,10 +86,7 @@ int		redirection(t_link *new, char operator, char *buffer)
 	aux = ft_substr(buffer, init_buffer, i - init_buffer);
 	if_is_a_directory(aux);
 	if (operator == '>' || operator == '<')
-	{
-		printf("chegou\n");
 		adding_redirect(new, aux, operator);
-	}
 	return (i);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 11:48:36 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:23:39 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,5 @@ int	main(int argc, char **argv, char **envp)
 	g_data->exitcode = 0;
 	g_data->save_stdin = dup(0);
 	g_data->save_stdout = dup(1);
-	t_link *link;
-	link = (t_link *)malloc(sizeof (t_link));
-	link->next = NULL;
-	g_data->link = link;
 	init_shell();
 }

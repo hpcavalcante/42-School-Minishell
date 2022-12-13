@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:41:24 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 12:15:45 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:56:42 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	handle_here_doc(t_link *link)
 	char	*line;
 
 	if (access(".here_doc", F_OK))
-	//.here_doc serve o ponto para deixar o arquivo invisivel
 		unlink(".here_doc");
 	fd = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	while (1)
@@ -34,11 +33,6 @@ void	handle_here_doc(t_link *link)
 			close(fd);
 			link->fd_in = open(".here_doc", O_RDONLY);
 			unlink(".here_doc");
-			//este unlink serve para deletar o arquivo futuramente, para isso
-			//o fdin precisa ser fechado. Mas isso nao ocorre aqui. 
-			//Ocorre no processo filho na linha 69. O unlink ele entende
-			//quando nao ha mais relacao entre fd e o arquivo. Entao ele simplesmente
-			//deleta.
 			return ;
 		}
 		write (fd, line, ft_strlen(line));
@@ -80,6 +74,5 @@ void    handle_input_file(t_link *link)
 			g_data->here_doc = 0;
 		}
 		dup2 (link->fd_in, STDIN);
-		//aqui estou duplicando e fazendo com que tudo apareca no arquivo de entrada padrao.
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 13:57:03 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:01:48 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,27 @@ int	check_built_in(t_link *link)
 
 char	**space_split(char *cmd)
 {
-    char    **matrix;
-    int        x;
-    int        y;
+	char    **matrix;
+	int        x;
+	int        y;
 
-    x = 0;
-    y = 0;
-    matrix = ft_split(cmd, ' ');
-    while (matrix[y] != NULL)
-    {
-        x = 0;
-        while (matrix[y][x] && matrix[y][x] != '\0')
-        {
-            if (matrix[y][x] == 1)
-            {    
+	x = 0;
+	y = 0;
+	matrix = ft_split(cmd, ' ');
+	while (matrix[y] != NULL)
+	{
+		x = 0;
+		while (matrix[y][x] && matrix[y][x] != '\0')
+		{
+			if (matrix[y][x] == 1)
+			{    
 				matrix[y][x] = ' ';
 			}
 			x++;
-        }
-        y++;
-    }
-    return (matrix);
+		}
+		y++;
+	}
+	return (matrix);
 }
 
 int	strchr_count(char *str, int c)
@@ -73,41 +73,44 @@ int	strchr_count(char *str, int c)
 	return (j);
 }
 
-int		parse_loop(t_link **new)
+int	parse_check(t_link **new, int i)
 {
-	int		i;
-	int		j;
+		int	j;
 
-	j = 0;
-	i = 0;
-	while (g_data->buffer[i] != '\0')
-	{
-		while (g_data->buffer[i] == ' ' && g_data->checked_line == NULL)
-			i++;
 		if (!check_syntax(g_data->buffer[i]))
-		 	return (0);
+			return (0);
 		if (g_data->buffer[i] == '\'' || g_data->buffer[i] == '\"')
 			i = parse_quotes(i);
-		else if (g_data->buffer[i] == '>')
+		else if (g_data->buffer[i] == '>' || g_data->buffer[i] == '<')
 		{
-			j = redirection(*new, '>', g_data->buffer + i);
+			j = redirection(*new, g_data->buffer[i], g_data->buffer + i);
 			if (j == -1)
 				return (0);
 			i += j;
 		}
-		else if (g_data->buffer[i] == '<')
-		{
-			j = redirection(*new, '<', g_data->buffer + i);
-			if (j == -1)
-				return (0);
-			i += j;
-		}
-		else if (g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) || g_data->buffer[i + 1] == '?'))
+		else if (g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) \
+		|| g_data->buffer[i + 1] == '?'))
 			i += parse_variable(i);
 		else if (g_data->buffer[i] == '|')
 			i = parse_pipe(i);
 		else
-			g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i++]);
+			g_data->checked_line = char_join(g_data->checked_line,\
+			g_data->buffer[i++]);
+		return (i);
+}
+
+int		parse_loop(t_link **new)
+{
+	int		i;
+
+	i = 0;
+	while (g_data->buffer[i] != '\0')
+	{
+		while (g_data->buffer[i] == ' ' && g_data->checked_line == NULL)
+			i++;		
+		i = parse_check(new, i);
+		if (i == -1)
+			return (0);
 	}
 	return (1);
 }

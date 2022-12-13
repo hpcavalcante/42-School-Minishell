@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 10:22:55 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:22:27 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		check_syntax(char c)
 	return (1);
 }
 
+
 int	parse_quotes(int i)
 {
 	char	quote;
@@ -54,8 +55,11 @@ int	parse_quotes(int i)
 	quote = g_data->buffer[i];
 	i++;
 	// if (quote == '\"' && g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) || g_data->buffer[i + 1] == '?'))
-	// 	i = parse_variable(i);
-	while (g_data->buffer[i] != quote)
+	// {
+	// 	remove_quotes(i);
+	// 	return (ft_strlen(g_data->buffer));
+	// }
+	while (g_data->buffer[i] && g_data->buffer[i] != quote)
 	{
 		g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i]);
 		if (g_data->buffer[i] == ' ')
@@ -116,7 +120,7 @@ char	*char_join(char *str1, char c)
 			str2[i] = str1[i];
 		str2[i++] = c;
 		str2[i] = '\0';
+		free (str1);
 	}
-	free (str1);
 	return (str2);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 15:07:11 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:02:03 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ char	**get_sorted_env();
 void	unset_builtin(char **cmd);
 void	do_export(char	*str);
 int		parse_variable(int i);
+char	*char_join(char *str1, char c);
 
 extern t_data *g_data;
 #endif
