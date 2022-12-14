@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/14 12:20:05 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:16:19 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	parse_loop(t_link **new)
 	int	i;
 
 	i = 0;
+	if (g_data->buffer[i] == ' ' && g_data->buffer[i + 1] == '\0' )
+		return (1);
 	while (g_data->buffer[i] != '\0')
 	{
 		while (g_data->buffer[i] == ' ' && g_data->checked_line == NULL)

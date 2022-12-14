@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/14 00:52:08 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:18:18 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ void	handle_output_file(t_link *link);
 void	handle_here_doc(t_link *link);
 void	write_error_red_nl(void);
 void	write_error_red_1_sign(char *cmd);
-void	write_error_red_2_signs(char *cmd);
-void	write_error_red_3_signs(char *cmd);
 void	if_is_a_directory(char *file);
 void	pwd_builtin(void);
 void	exit_builtin(char **cmd);
