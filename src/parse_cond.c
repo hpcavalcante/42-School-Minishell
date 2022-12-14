@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/14 00:51:31 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:10:35 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	parse_variable(int i)
 		return (i + 2);
 	}
 	if (ft_isdigit(g_data->buffer[i + 1]))
-		return (ft_strlen(g_data->buffer));
+		return (i + 2);
 	i++;
 	temp = i;
 	while (ft_isalnum(g_data->buffer[i]))

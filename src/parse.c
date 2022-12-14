@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 21:08:12 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:20:05 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	parse_check(t_link **new, int i)
 	{
 		j = redirection(*new, g_data->buffer[i], g_data->buffer + i);
 		if (j == -1)
-			return (0);
+			return (-1);
 		i += j;
 	}
 	else if (g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) \
