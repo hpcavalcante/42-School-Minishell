@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 16:45:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 07:21:00 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 15:26:34 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	free_list(t_link *link)
 			close (link->fd_out);
 		if (link->cmd != NULL)
 			free_matrix(link->cmd);
-		free(link->path);
-		free (link);
+		if (link)
+			free (link);
 		link = temp;
 	}
 }
