@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/14 15:29:30 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:10:56 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	parse_quotes(int i)
 		{
 			g_data->checked_line = \
 			char_join(g_data->checked_line, g_data->buffer[i]);
+			if (g_data->buffer[i] == ' ' && g_data->buffer[i + 1] == quote)
+				g_data->checked_line = char_join(g_data->checked_line, 1);
 			i++;
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:07:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/14 15:11:01 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:10:19 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,33 @@ char	*exit_error_path(char **path, t_link *list)
 	return (NULL);
 }
 
+char	*matrix_join(t_link	*link, char **matrix, int count)
+{
+	char	*path;
+	char	*temp;
+
+	if (access(link->cmd[0], F_OK | X_OK) == 0)
+	{
+		free_matrix(matrix);
+		return (link->cmd[0]);
+	}
+	temp = ft_strjoin(matrix[count], "/");
+	path = ft_strjoin(temp, link->cmd[0]);
+	free (temp);
+	if (access(path, F_OK | X_OK) == 0)
+	{
+		free_matrix(matrix);
+		return (path);
+	}
+	free (path);
+	return (NULL);
+}
+
 char	*get_path(t_link *link, char **path_env)
 {
 	int		count;
-	char	*path;
 	char	**matrix;
-	char	*temp;
+	char	*aux;
 
 	if (find_env("PATH") == NULL)
 		exit_error_path(NULL, link);
@@ -60,72 +81,9 @@ char	*get_path(t_link *link, char **path_env)
 	count = -1;
 	while (matrix[++count] != NULL)
 	{
-		if (access(link->cmd[0], F_OK | X_OK) == 0)
-		{
-			free_matrix(matrix);
-			return (link->cmd[0]);
-		}
-		temp = ft_strjoin(matrix[count], "/");
-		path = ft_strjoin(temp, link->cmd[0]);
-		free (temp);
-		if (access(path, F_OK | X_OK) == 0)
-		{
-			free_matrix(matrix);
-			return (path);
-		}
-		free (path);
+		aux = matrix_join(link, matrix, count);
+		if (aux != NULL)
+			return (aux);
 	}
 	return (exit_error_path(matrix, link));
-}
-
-char	**matrix_cmd(char *cmd)
-{
-	char	**matrix;
-	int		x;
-	int		y;
-
-	x = 0;
-	y = 0;
-	matrix = ft_split(cmd, ' ');
-	while (matrix[y] != NULL)
-	{
-		x = 0;
-		while (matrix[y][x] && matrix[y][x] != '\'')
-			x++;
-		if (matrix[y][x] && matrix[y][x + 1])
-			x++;
-		while (matrix[y][x] && matrix[y][x] != '\'')
-		{
-			if (matrix[y][x] == 1)
-				matrix[y][x] = ' ';
-			x++;
-		}
-		y++;
-	}
-	return (matrix);
-}
-
-char	**get_cmd(char *cmd)
-{
-	char	**matrix;
-	int		count;
-
-	count = 0;
-	if (count_find(cmd) % 2 != 0)
-		write(2, "Error:", 7);
-	else
-	{
-		while (cmd[count] && cmd[count] != '\'')
-			count++;
-		if (cmd[count] == '\'' && cmd[count + 1])
-			count++;
-		while (cmd[count] && cmd[count] != '\'')
-		{
-			if (cmd[count] == ' ')
-				cmd[count] = 1;
-			count++;
-		}
-	}
-	matrix = matrix_cmd(cmd);
-	return (matrix);
 }
