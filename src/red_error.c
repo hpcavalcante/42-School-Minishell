@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 18:56:46 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 15:12:23 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 21:13:28 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	write_error_red_1_sign(char *cmd)
 	g_data->exitcode = 2;
 }
 
-void	write_error_red_nl()
+void	write_error_red_nl(void)
 {
 	write (STDERR, ERROR_HD_NL, 46);
 	g_data->error = 1;
@@ -70,7 +70,7 @@ void	redirection_error(char *cmd)
 		write_error_red_nl();
 	else if (cmd[i] == '&' && cmd[i + 1] == '>')
 		write_error_red_nl();
-	else if (cmd[i] == '&' || cmd[i] == ';'|| cmd[i] == '|'\
+	else if (cmd[i] == '&' || cmd[i] == ';' || cmd[i] == '|' \
 	|| cmd[i] == '(' || cmd[i] == ')')
 		write_error_red_1_sign(cmd);
 }

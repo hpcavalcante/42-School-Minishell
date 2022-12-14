@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 11:27:31 by gissao-m          #+#    #+#              #
-#    Updated: 2022/12/13 20:19:50 by hepiment         ###   ########.fr        #
+#    Updated: 2022/12/13 21:08:53 by gissao-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ PATH_MAIN = $(PATH_SRC)main/
 PATH_OBJS = ./objs/
 
 SRC =	$(PATH_MAIN)main.c\
+		$(PATH_SRC)built_in.c\
 		$(PATH_SRC)parse.c\
 		$(PATH_SRC)parse_utils.c\
 		$(PATH_SRC)parse_cond.c\

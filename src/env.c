@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 15:53:17 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/12 16:37:33 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:49:05 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*find_env(char *var)
 	return (NULL);
 }
 
-char	**get_sorted_env()
+char	**get_sorted_env(void)
 {
 	int		env_size;
 	char	**env;

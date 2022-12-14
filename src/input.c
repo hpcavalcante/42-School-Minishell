@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:41:24 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 16:56:42 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:51:41 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	quit_core(int signum)
 	}
 }
 
-void    handle_input_file(t_link *link)
+void	handle_input_file(t_link *link)
 {
 	if (link->file_in != NULL)
 	{
@@ -62,8 +62,8 @@ void    handle_input_file(t_link *link)
 			g_data->error = 1;
 			return ;
 		}
-		else if (access(link->file_in, F_OK | R_OK) == 0 
-					&& link->delimiter == 0)
+		else if (access(link->file_in, F_OK | R_OK) \
+		== 0 && link->delimiter == 0)
 			link->fd_in = open (link->file_in, O_RDONLY);
 		else if (link->delimiter == 1)
 		{

@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:15:48 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 18:49:31 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 21:10:37 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_SHELL
-# define MINI_SHELL
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include "../libft/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include "../libft/libft.h"
 
 # define STDERR 2
 # define STDOUT 1
@@ -56,12 +56,11 @@ typedef struct s_data
 	int		save_stdin;
 	int		save_stdout;
 	char	*checked_line;
-	char 	**envp;
-	char 	*buffer;
+	char	**envp;
+	char	*buffer;
 	int		exec_pid;
 	t_link	*link;
-} t_data;
-
+}	t_data;
 
 char	*get_path(t_link *link, char **path_env);
 char	**find_path_env(char **path_env);
@@ -69,10 +68,10 @@ int		count_find(char *str_cmd);
 char	**matrix_cmd(char *cmd);
 char	**get_cmd(char *cmd);
 void	process(t_link *link);
-int		parse();
+int		parse(t_link *link);
 void	command(char *checked_line);
 char	**space_split(char *cmd);
-void	child_process();
+void	child_process(void);
 void	kill_loop(int signal);
 void	exit_code(int signal);
 void	linked_list(t_link *link, t_link *new);
@@ -86,27 +85,27 @@ void	check_signs(char *cmd);
 void	adding_redirect(t_link *new, char *aux, char operator);
 void	handle_output_file(t_link *link);
 void	handle_here_doc(t_link *link);
-void	write_error_red_nl( );
+void	write_error_red_nl(void);
 void	write_error_red_1_sign(char *cmd);
 void	write_error_red_2_signs(char *cmd);
 void	write_error_red_3_signs(char *cmd);
 void	if_is_a_directory(char *file);
-void	pwd_builtin();
+void	pwd_builtin(void);
 void	exit_builtin(char **cmd);
 void	echo_builtin(char **cmd);
 void	exec_builtin(t_link *link);
 int		check_dir(char *path);
 int		checking_directory(char *path);
 void	free_matrix(char **s);
-void	free_all();
+void	free_all(void);
 void	handle_input_file(t_link *link);
 int		check_syntax(char c);
 int		parse_pipe(int i);
 int		parse_quotes(int i);
-int		check_quotes();
+int		check_quotes(void);
 int		strchr_count(char *str, int c);
 void	syntax_error(char c);
-void	child_process();
+void	child_process(void);
 void	parent_process(t_link *link);
 int		check_built_in(t_link *link);
 void	free_list(t_link *link);
@@ -117,11 +116,11 @@ void	dir_error(char **cmd);
 void	cd_builtin(char **cmd);
 void	env_remove(char	*var);
 void	export_builtin(char **cmd);
-char	**get_sorted_env();
+char	**get_sorted_env(void);
 void	unset_builtin(char **cmd);
 void	do_export(char	*str);
 int		parse_variable(int i);
 char	*char_join(char *str1, char c);
 
-extern t_data *g_data;
+extern t_data	*g_data;
 #endif

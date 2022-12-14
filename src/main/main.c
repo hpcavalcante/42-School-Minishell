@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 19:07:42 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:47:55 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_data *g_data;
+t_data	*g_data;
 
 void	kill_loop(int signal)
 {
@@ -52,10 +52,10 @@ int	ft_str_check(const char *s1, const char *s2)
 		return (0);
 }
 
-void	prompt()
+void	prompt(void)
 {
-	t_link *link;
-	
+	t_link	*link;
+
 	if (g_data->buffer[0] == '\0')
 		return ;
 	link = (t_link *)malloc(sizeof (t_link));
@@ -73,11 +73,12 @@ void	prompt()
 	while (g_data->link != NULL && g_data->error == 0)
 	{
 		process(g_data->link);
-		g_data->link = g_data->link->next;	
+		g_data->link = g_data->link->next;
 	}
 	free_list(link);
 }
-void	init_shell()
+
+void	init_shell(void)
 {	
 	signal(SIGINT, kill_loop);
 	while (1)
@@ -91,7 +92,7 @@ void	init_shell()
 		g_data->buffer = readline("\e[1;32m[minishell]: \e[0m");
 		if (g_data->buffer != NULL)
 			prompt();
-		else		
+		else
 		{	
 			free_all();
 			write(1, "exit\n", 5);
@@ -103,9 +104,8 @@ void	init_shell()
 	}
 }
 
-
 int	main(int argc, char **argv, char **envp)
-{ 
+{
 	(void) argv;
 	if (argc != 1)
 	{

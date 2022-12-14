@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cond.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 20:08:49 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 21:26:07 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,17 @@ void	adding_redirect(t_link *new, char *aux, char operator)
 	}
 }
 
-int		redirection(t_link *new, char operator, char *buffer)
+void	check_operators(t_link *new, char operator, char *buffer)
+{
+	int	j;
+
+	j = 0;
+	if (buffer[j] == '>' && buffer[j + 1] == '>')
+		new->append = 1;
+	else if (buffer[j] == '<' && buffer[j + 1] == '<')
+		new->delimiter = 1;
+}
+int	redirection(t_link *new, char operator, char *buffer)
 {
 	char	*aux;
 	int		i;
@@ -70,8 +80,9 @@ int		redirection(t_link *new, char operator, char *buffer)
 	while (buffer[i] == ' ' || (buffer[i] == operator && i < 2))
 		i++;
 	init_buffer = i;
-	while (buffer[i] != '<' && buffer[i] != '>' && buffer[i] != ' ' && buffer[i] != '|' \
-	&& buffer[i] != '&' && buffer[i] != ';' && buffer[i] != '\0' && buffer[i] != '(' && buffer[i] != ')')
+	while (buffer[i] != '<' && buffer[i] != '>' && buffer[i] != ' ' && \
+	buffer[i] != '|' && buffer[i] != '&' && buffer[i] != ';' && buffer[i] \
+	!= '\0' && buffer[i] != '(' && buffer[i] != ')')
 		i++;
 	if (i == init_buffer)
 	{
@@ -112,7 +123,8 @@ int	parse_variable(int i)
 	if (var != NULL)
 	{
 		if (find_env(var) != NULL && find_env(var)[0] != '\0')
-			g_data->checked_line = ft_my_strjoin(g_data->checked_line, find_env(var));
+			g_data->checked_line = \
+			ft_my_strjoin(g_data->checked_line, find_env(var));
 		free (var);
 	}
 	return (i);

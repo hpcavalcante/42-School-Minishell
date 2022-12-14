@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:03:23 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 20:03:00 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 21:03:14 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parse_pipe(int i)
 	{
 		syntax_error('|');
 		i = ft_strlen(g_data->buffer);
-		return(i);
+		return (i);
 	}
 	while (temp->next != NULL)
 		temp = temp->next;
@@ -36,17 +36,16 @@ int	parse_pipe(int i)
 	return (i);
 }
 
-int		check_syntax(char c)
+int	check_syntax(char c)
 {
 	if (c == '&' || c == ';' || c == '\\'\
 		||c == '(' || c == ')' || c == '*')
-		{
-			syntax_error(c);
-			return (0);
-		}
+	{
+		syntax_error(c);
+		return (0);
+	}
 	return (1);
 }
-
 
 int	parse_quotes(int i)
 {
@@ -56,12 +55,13 @@ int	parse_quotes(int i)
 	i++;
 	while (g_data->buffer[i] && g_data->buffer[i] != quote)
 	{
-		if (quote == '\"' && g_data->buffer[i] == '$' && (ft_isalnum(g_data->buffer[i + 1]) || \
-		g_data->buffer[i + 1] == '?'))
+		if (quote == '\"' && g_data->buffer[i] == '$' && \
+		(ft_isalnum(g_data->buffer[i + 1]) || g_data->buffer[i + 1] == '?'))
 			i = parse_variable(i);
 		else
 		{
-			g_data->checked_line = char_join(g_data->checked_line, g_data->buffer[i]);
+			g_data->checked_line = \
+			char_join(g_data->checked_line, g_data->buffer[i]);
 			if (g_data->buffer[i] == ' ')
 				g_data->checked_line = char_join(g_data->checked_line, 1);
 			i++;
@@ -72,7 +72,7 @@ int	parse_quotes(int i)
 	return (i);
 }
 
-int	check_quotes()
+int	check_quotes(void)
 {
 	char	quote;
 	int		i;
@@ -88,7 +88,8 @@ int	check_quotes()
 		}
 		i++;
 	}
-	if (strchr_count(g_data->buffer, quote) % 2 != 0 && strchr_count(g_data->buffer, quote) > 0)
+	if (strchr_count(g_data->buffer, quote) % 2 != 0 \
+	&& strchr_count(g_data->buffer, quote) > 0)
 	{	
 		write(STDERR, "error: unclosed quotes\n", 24);
 		g_data->error = 1;

@@ -3,40 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 17:02:50 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 19:41:45 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/13 21:08:12 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_built_in(t_link *link)
-{
-	if (ft_str_check(link->cmd[0], "echo"))
-		return (1);
-	else if (ft_str_check(link->cmd[0], "pwd"))
-		return (1);
-	else if (ft_str_check(link->cmd[0], "export"))
-		return (1);
-	else if (ft_str_check(link->cmd[0], "env"))
-		return (1);
-	else if (ft_str_check(link->cmd[0], "exit"))
-		return (1);
-	else if (ft_str_check(link->cmd[0], "unset"))
-		return (1);
-	else if (ft_str_check(link->cmd[0], "cd"))
-		return (1);
-	else
-		return (0);
-}
-
 char	**space_split(char *cmd)
 {
-	char    **matrix;
-	int        x;
-	int        y;
+	char	**matrix;
+	int		x;
+	int		y;
 
 	x = 0;
 	y = 0;
@@ -47,7 +27,7 @@ char	**space_split(char *cmd)
 		while (matrix[y][x] && matrix[y][x] != '\0')
 		{
 			if (matrix[y][x] == 1)
-			{    
+			{
 				matrix[y][x] = ' ';
 			}
 			x++;
@@ -94,21 +74,20 @@ int	parse_check(t_link **new, int i)
 	else if (g_data->buffer[i] == '|')
 		i = parse_pipe(i);
 	else
-		g_data->checked_line = char_join(g_data->checked_line,\
+		g_data->checked_line = char_join(g_data->checked_line, \
 		g_data->buffer[i++]);
-	//printf("%i\n", i); 
 	return (i);
 }
 
-int		parse_loop(t_link **new)
+int	parse_loop(t_link **new)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (g_data->buffer[i] != '\0')
 	{
 		while (g_data->buffer[i] == ' ' && g_data->checked_line == NULL)
-			i++;		
+			i++;
 		i = parse_check(new, i);
 		if (i == -1)
 			return (0);
