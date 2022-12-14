@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:07:47 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 16:46:18 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:12:44 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ char	*exit_error_path(char **path, t_link *list)
 {
 	if (path != NULL)
 		free_matrix(path);
+	if (ft_strnstr(g_data->buffer, "/", ft_strlen(g_data->buffer)))
+	{
+		write(STDERR, ": Not a directory\n", 18);
+		close (list->pipe_fd[1]);
+		free_all();
+		exit(126);
+	}
 	write (STDERR, list->cmd[0], ft_strlen(list->cmd[0]));
 	write (STDERR, ": command not found\n", 20);
 	close (list->pipe_fd[1]);
