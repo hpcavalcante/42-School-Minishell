@@ -3,39 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 20:47:55 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/14 00:48:37 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 t_data	*g_data;
-
-void	kill_loop(int signal)
-{
-	(void) signal;
-	if (g_data->here_doc == 1)
-	{
-		close (STDIN);
-		g_data->error = 1;
-	}
-	if (g_data->pid != 0 && g_data->in_exec == 1)
-	{
-		kill(g_data->pid, SIGKILL);
-		write(1, "\n", 1);
-	}
-	if (g_data->in_exec == 0)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	g_data->exitcode = 130;
-}
 
 int	ft_str_check(const char *s1, const char *s2)
 {
@@ -56,6 +33,7 @@ void	prompt(void)
 {
 	t_link	*link;
 
+	signal(SIGQUIT, core_dump);
 	if (g_data->buffer[0] == '\0')
 		return ;
 	link = (t_link *)malloc(sizeof (t_link));

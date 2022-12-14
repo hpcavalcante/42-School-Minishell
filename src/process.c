@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:11:58 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/13 09:05:22 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 00:44:37 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	exec_builtin(t_link *link)
 void	process(t_link *link)
 {
 	g_data->in_exec = 1;
+	g_data->signal = 0;
 	if (pipe(link->pipe_fd) == -1)
 		exit (-1);
 	if (check_built_in(link))
@@ -73,12 +74,22 @@ void	parent_process(t_link *link)
 	{
 		dup2(link->pipe_fd[0], 0);
 		waitpid(g_data->pid, &wstatus, 0);
-		g_data->exitcode = WEXITSTATUS(wstatus);
+		if (g_data->signal == 1)
+			g_data->exitcode = 130;
+		else if (g_data->signal == 2)
+			g_data->exitcode = 131;
+		else
+			g_data->exitcode = WEXITSTATUS(wstatus);
 	}
 	else
 	{
 		waitpid(g_data->pid, &wstatus, 0);
-		g_data->exitcode = WEXITSTATUS(wstatus);
+		if (g_data->signal == 1)
+			g_data->exitcode = 130;
+		else if (g_data->signal == 2)
+			g_data->exitcode = 131;
+		else
+			g_data->exitcode = WEXITSTATUS(wstatus);
 	}
 	close (link->pipe_fd[0]);
 }
