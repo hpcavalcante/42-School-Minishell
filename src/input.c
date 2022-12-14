@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:41:24 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 20:51:41 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:40:37 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	handle_here_doc(t_link *link)
 void	quit_core(int signum)
 {
 	(void)signum;
-	if (g_data->exec_pid != 0 && g_data->in_exec == 1)
+	if (g_data->pid != 0 && g_data->in_exec == 1)
 	{
-		kill(g_data->exec_pid, SIGKILL);
+		kill(g_data->pid, SIGKILL);
 		ft_putstr_fd("Quit (Core dumped)\n", 1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 09:46:55 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/14 00:48:37 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:39:25 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ int	main(int argc, char **argv, char **envp)
 	g_data->exitcode = 0;
 	g_data->save_stdin = dup(0);
 	g_data->save_stdout = dup(1);
+	g_data->pid = -1;
 	init_shell();
 }

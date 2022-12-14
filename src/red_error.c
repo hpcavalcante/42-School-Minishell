@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   red_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 18:56:46 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 21:13:28 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:46:48 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	redirection_error(char *cmd)
 	int	i;
 
 	i = 0;
-	if (cmd[i + 5] == '<')
+	if (cmd[i + 5] != '\0' && cmd[i + 5] == '<')
 		write_error_red_3_signs(cmd);
 	else if (cmd[i + 4] == '<')
 		write_error_red_2_signs(cmd);
@@ -73,4 +73,5 @@ void	redirection_error(char *cmd)
 	else if (cmd[i] == '&' || cmd[i] == ';' || cmd[i] == '|' \
 	|| cmd[i] == '(' || cmd[i] == ')')
 		write_error_red_1_sign(cmd);
+
 }

@@ -6,7 +6,7 @@
 /*   By: hepiment <hepiment@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 20:11:58 by hepiment          #+#    #+#             */
-/*   Updated: 2022/12/14 15:27:37 by hepiment         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:38:18 by hepiment         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	child_process(void)
 		dup2(g_data->link->pipe_fd[1], 1);
 	close(g_data->link->pipe_fd[1]);
 	execve(g_data->link->path, g_data->link->cmd, g_data->envp);
-	printf("\033[1;31mUnknown error!!!: I'm not programmed for this \e[0m");
+	printf("\033[1;31mUnknown error! \e[0m\n");
 	free_all();
 	exit(exitc);
 }
