@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:09:32 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/12/13 21:26:07 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/12/13 22:24:08 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,11 @@ void	adding_redirect(t_link *new, char *aux, char operator)
 	}
 }
 
-void	check_operators(t_link *new, char operator, char *buffer)
-{
-	int	j;
-
-	j = 0;
-	if (buffer[j] == '>' && buffer[j + 1] == '>')
-		new->append = 1;
-	else if (buffer[j] == '<' && buffer[j + 1] == '<')
-		new->delimiter = 1;
-}
 int	redirection(t_link *new, char operator, char *buffer)
 {
 	char	*aux;
 	int		i;
 	int		init_buffer;
-	int		j;
 
 	i = 0;
 	while (buffer[i] == ' ' || (buffer[i] == operator && i < 2))
@@ -89,11 +78,8 @@ int	redirection(t_link *new, char operator, char *buffer)
 		redirection_error(buffer);
 		return (-1);
 	}
-	j = 0;
-	if (buffer[j] == '>' && buffer[j + 1] == '>')
-		new->append = 1;
-	else if (buffer[j] == '<' && buffer[j + 1] == '<')
-		new->delimiter = 1;
+	check_operator(new, '>', buffer);
+	check_operator2(new, '<', buffer);
 	aux = ft_substr(buffer, init_buffer, i - init_buffer);
 	if_is_a_directory(aux);
 	if (operator == '>' || operator == '<')
